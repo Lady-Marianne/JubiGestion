@@ -9,3 +9,8 @@ Thumbs.db
 
 # Archivos temporales o de logs comunes:
 *.log
+
+# Entornos virtuales:
+jubi_gestion/
+
+
