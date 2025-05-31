@@ -1,0 +1,11 @@
+# Archivos temporales de Python:
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Archivos del sistema operativo:
+.DS_Store
+Thumbs.db
+
+# Archivos temporales o de logs comunes:
+*.log
