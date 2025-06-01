@@ -1,6 +1,16 @@
-from flask import Flask, render_template
+# Import necessary modules from Flask and database setup:
 
+from flask import Flask, render_template
+from database_setup import db, create_database, Member
+import os
+
+# Configure the Flask app and database:
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/jubigestion.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+create_database(app)
 
 # Define a route for the home page:
 @app.route('/')
@@ -9,6 +19,3 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# This is a simple Flask application that serves a home page.
-# To run this application, save it as app.py and execute it with Python.

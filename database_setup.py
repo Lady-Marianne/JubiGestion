@@ -1,28 +1,38 @@
+from datetime import date
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-
-# Crear la app de Flask:
-app = Flask(__name__)
 
 # Crear la carpeta "database" si no existe:
 if not os.path.exists("database"):
     os.makedirs("database")
 
-# Configuración de la base de datos SQLite:
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/jubigestion.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy()
 
-# Inicializar la base de datos:
-db = SQLAlchemy(app)
+# Base model: Member (Center affiliate):
+class Member(db.Model):
+    __tablename__ = 'members'
 
-# Modelo de ejemplo (puede eliminarse luego):
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
+    first_names = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    pami_number = db.Column(db.String(14), nullable=True)
+    birth_date = db.Column(db.Date, nullable=True)
+    phone = db.Column(db.String(20), nullable=True)
+    email = db.Column(db.String(100), nullable=True)
+    address = db.Column(db.String(200), nullable=True)
+    status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
+    join_date = db.Column(db.Date, nullable=False, default=date.today)
 
-# Crear la base de datos y las tablas:
-with app.app_context():
-    db.create_all()
+    def __repr__(self):
+        return f"<Member {self.first_names} {self.last_name}>"
 
-print("Base de datos creada correctamente.")
+# Create the database (if it doesn't exist) and the tables:
+def create_database(app):
+    # Si querés usar la carpeta "database/", actualizá el path aquí también
+    if not os.path.exists('jubigestion.db'):
+        with app.app_context():
+            db.create_all()
+            print("Base de datos creada exitosamente.")
+    else:
+        print("La base de datos ya existe.")        
