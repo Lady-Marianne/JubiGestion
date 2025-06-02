@@ -29,8 +29,10 @@ class Member(db.Model):
 
 # Create the database (if it doesn't exist) and the tables:
 def create_database(app):
-    # Si querés usar la carpeta "database/", actualizá el path aquí también
-    if not os.path.exists('jubigestion.db'):
+    db_path = 'database/jubigestion.db'
+    # print(f"Ruta de la base de datos: {db_path}")
+    # print(f"¿Existe la base? {os.path.exists(db_path)}")
+    if not os.path.exists(db_path):
         with app.app_context():
             db.create_all()
             print("Base de datos creada exitosamente.")
