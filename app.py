@@ -1,7 +1,11 @@
+# app.py
+
 # Import necessary modules from Flask and database setup:
 
 from flask import Flask, render_template
-from database_setup import db, create_database, Member
+from extensions import db
+from database_setup import create_database
+from models.member import Member  # Importing Member model to ensure it's registered with SQLAlchemy.
 import os
 
 # Configure the Flask app and database:
@@ -11,7 +15,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-create_database(app)
+with app.app_context():
+    create_database(app)
 
 # Define a route for the home page:
 @app.route('/')
