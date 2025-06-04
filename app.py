@@ -5,7 +5,7 @@
 from flask import Flask, render_template
 from extensions import db
 from database_setup import create_database
-from models.member import Member  # Importing Member model to ensure it's registered with SQLAlchemy.
+# from models.member import Member  # Importing Member model to ensure it's registered with SQLAlchemy.
 import os
 
 # Configure the Flask app and database:

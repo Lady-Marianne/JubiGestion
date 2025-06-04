@@ -14,7 +14,7 @@ status (activo/inactivo)
 join_date
 
 ┌────────────────────┐
-│     Teachers        │
+│     Teachers       │
 └────────────────────┘
 dni (PK) (not autoincrement, not null)
 activity_id (FK -> Activities)
@@ -204,11 +204,3 @@ jubi_gestion\Scripts\python.exe app.py
 Así cada vez que querés ejecutar tu app, simplemente hacés doble clic en ese archivo o lo corrés desde consola con:
 
 run.bat
-
-
-
-
-
-
-
-
