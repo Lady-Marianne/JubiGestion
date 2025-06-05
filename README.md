@@ -22,4 +22,15 @@ Está pensada para funcionar de manera local, sin necesidad de conexión a inter
 
 ---
 
-## 🗂️ Estructura del proyecto
+## 🗂️ Estructura del proyecto:
+
+- data: jubigestion_db_esquema.md
+- models: member.py, teacher.py
+- static: styles.css
+- templates: index.html, layout.html
+-app.puy
+- database_setup.py
+- extensions.py
+- README.md
+- requirements.txt
+- run.bat
