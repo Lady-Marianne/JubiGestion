@@ -1,13 +1,16 @@
 # mdodels/professional.py:
 
-from database import db
+from datetime import date
+from extensions import db
+from sqlalchemy import func
+from models.base_person import BasePerson
+from utils.dni_utils import generate_full_dni
 
 # Professional:
 
-class Professional(db.Model):
+class Professional(BasePerson):
     __tablename__ = 'professionals'
 
-    dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
     first_names = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     license_number = db.Column(db.String(20), unique=True, nullable=True)  # Professional license number.
@@ -16,6 +19,7 @@ class Professional(db.Model):
     email = db.Column(db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=True)
     status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
-    
+    join_date = db.Column(db.Date, nullable=False, default=func.current_date())
+   
     def __repr__(self):
         return f"<Professional {self.first_names} {self.last_name}>"
