@@ -4,6 +4,7 @@ from datetime import date
 from extensions import db
 
 # Activity:
+
 class Activity(db.Model):
     __tablename__ = 'activities'
 

@@ -1,4 +1,4 @@
-# # models/member.py
+# # models/member.py:
 
 from datetime import date
 from extensions import db
