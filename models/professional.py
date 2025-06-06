@@ -10,6 +10,7 @@ class Professional(db.Model):
     dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
     first_names = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
+    license_number = db.Column(db.String(20), unique=True, nullable=True)  # Professional license number.
     profession = db.Column(db.String(100), nullable=False)  # e.g., "Psychologist", "Nutritionist".
     phone = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(100), nullable=True)
