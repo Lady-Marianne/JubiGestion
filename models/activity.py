@@ -1,4 +1,4 @@
-# models/activitie.py:
+# models/activity.py:
 
 from datetime import date
 from extensions import db
@@ -18,6 +18,8 @@ class Activity(db.Model):
     teacher_id = db.Column(db.String(8), db.ForeignKey('teachers.dni'), nullable=False)  
     # Foreign key to the teacher.
     status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
+
+    activity_enrollments = db.relationship("ActivityEnrollment", back_populates="activity", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Activity {self.name}>"

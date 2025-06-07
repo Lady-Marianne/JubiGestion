@@ -1,7 +1,8 @@
-# models/activitie_enrollment.py:
+# models/activity_enrollment.py:
 
 from datetime import date
 from extensions import db
+from sqlalchemy import func
 
 # Activity Enrollment (Linking members to activities):
 
@@ -11,8 +12,11 @@ class ActivityEnrollment(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     member_dni = db.Column(db.String(8), db.ForeignKey('members.dni'), nullable=False)
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
-    enrollment_date = db.Column(db.Date, nullable=False, default=date.today)
+    enrollment_date = db.Column(db.Date, nullable=False, default=func.current_date())
     status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
+
+    member = db.relationship("Member", back_populates="activity_enrollments")
+    activity = db.relationship("Activity", back_populates="activity_enrollments")
 
     def __repr__(self):
         return f"<ActivityEnrollment {self.id} for {self.member_dni} in {self.activity_id}>"

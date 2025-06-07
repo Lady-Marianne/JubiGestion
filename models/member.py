@@ -20,5 +20,7 @@ class Member(BasePerson):
     status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 
+    activity_enrollments = db.relationship("ActivityEnrollment", back_populates="member", cascade="all, delete-orphan")
+
     def __repr__(self):
         return f"<Member {self.first_names} {self.last_name}>"
