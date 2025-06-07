@@ -13,6 +13,7 @@ from models.activity_enrollment import ActivityEnrollment
 from models.appointments import Appointment
 from models.payment import Payment
 import os
+from endpoints.member_routes import member_bp
 
 # Configure the Flask app and database:
 
@@ -28,6 +29,8 @@ create_database(app)  # Create the database if it doesn't exist.
 @app.route('/')
 def home():
     return render_template('index.html')
+
+app.register_blueprint(member_bp, url_prefix='/api')  # Registering the member routes blueprint.
 
 if __name__ == '__main__':
     app.run(debug=True)
