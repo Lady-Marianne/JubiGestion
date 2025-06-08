@@ -17,5 +17,7 @@ class Appointment(db.Model):
     status = db.Column(db.String(20), nullable=False, default='scheduled')
     # 'scheduled', 'completed', 'canceled', etc.
 
+    member = db.relationship("Member", back_populates="appointments")
+    professional = db.relationship("Professional", back_populates="appointments")
     def __repr__(self):
         return f"<Appointment {self.id} for {self.member_dni} with {self.professional_dni} on {self.appointment_date}>"

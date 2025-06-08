@@ -1,6 +1,8 @@
 # models/base_person.py:
 
 from extensions import db
+from datetime import date
+from sqlalchemy import func
 from utils.dni_utils import generate_full_dni
 
 class BasePerson(db.Model):
@@ -8,8 +10,15 @@ class BasePerson(db.Model):
 
     dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
     gender = db.Column(db.String(1), nullable=False)
-
     _dni_number = None  # Temporal, does not store in the DB, but is used to generate the complete DNI.
+    first_names = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    birth_date = db.Column(db.Date, nullable=True)
+    phone = db.Column(db.String(20), nullable=True)
+    email = db.Column(db.String(100), nullable=True)
+    address = db.Column(db.String(200), nullable=True)
+    status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
+    join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 
     @property
     def dni_number(self):
