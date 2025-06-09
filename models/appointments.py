@@ -16,10 +16,11 @@ class Appointment(db.Model):
     professional_dni = db.Column(db.String(8), db.ForeignKey('professionals.dni'), nullable=False) 
     # Foreign key to the professional table.
     appointment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    status = db.Column(SQLAlchemyEnum(AppointmentStatus), nullable=False, default=AppointmentStatus.PROGRAMADO)
+    status = db.Column(SQLAlchemyEnum(AppointmentStatus), nullable=False, default=AppointmentStatus.SCHEDULED)
     # 'SCHEDULED', 'COMPLETED', 'CANCELED', etc.
 
     member = db.relationship("Member", back_populates="appointments")
     professional = db.relationship("Professional", back_populates="appointments")
+    
     def __repr__(self):
         return f"<Appointment {self.id} for {self.member_dni} with {self.professional_dni} on {self.appointment_date}>"

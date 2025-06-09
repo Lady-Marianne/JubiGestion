@@ -5,6 +5,7 @@ from datetime import date
 from sqlalchemy import func, Enum as SQLAlchemyEnum
 from utils.dni_utils import generate_full_dni
 from models.enums import PersonStatus, Gender
+from utils.validators import is_valid_email
 class BasePerson(db.Model):
     __abstract__ = True  # SQLAlchemy doesn`t convert it into a table.
 
@@ -17,7 +18,7 @@ class BasePerson(db.Model):
     phone = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=True)
-    status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
+    status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVE)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 
     def __repr__(self):
@@ -37,3 +38,19 @@ class BasePerson(db.Model):
             raise ValueError("Se debe establecer el sexo antes de asignar el número de DNI.")
         self._dni_number = value
         self.dni = generate_full_dni(self.gender, value)
+
+    @property
+    def email(self):
+        return self._email
+
+    @email.setter
+    def email(self, value):
+        """
+        Validates the email format before setting it.
+        """
+        def email(self, value):
+            if value is not None:
+                valid, error = is_valid_email(value)
+                if not valid:
+                    raise ValueError(error)
+        self._email = value

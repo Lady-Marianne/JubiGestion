@@ -13,7 +13,7 @@ class Payment(db.Model):
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     period = db.Column(db.Date, nullable=False) # The period of time the payment covers.
     payment_date = db.Column(db.Date, nullable=False, default=date.today)
-    status = db.Column(db.String(20), nullable=False, default='pending')  # 'pending', 'completed', etc.
+    status = db.Column(db.String(20), nullable=False, default='PENDING')  # 'PENDING', 'PAID', etc.
 
     def __repr__(self):
         return f"<Payment {self.id} for Member {self.member_id}>"
