@@ -3,6 +3,8 @@
 from datetime import date
 from extensions import db
 from sqlalchemy import func
+from sqlalchemy import Enum as SQLAlchemyEnum
+from models.enums import ActivityStatus
 
 # Activity Enrollment (Linking members to activities):
 
@@ -13,7 +15,7 @@ class ActivityEnrollment(db.Model):
     member_dni = db.Column(db.String(8), db.ForeignKey('members.dni'), nullable=False)
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
     enrollment_date = db.Column(db.Date, nullable=False, default=func.current_date())
-    status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
+    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVO)
 
     member = db.relationship("Member", back_populates="activity_enrollments")
     activity = db.relationship("Activity", back_populates="activity_enrollments")

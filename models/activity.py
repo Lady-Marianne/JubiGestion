@@ -2,6 +2,8 @@
 
 from datetime import date
 from extensions import db
+from models.enums import ActivityStatus
+from sqlalchemy import Enum as SQLAlchemyEnum
 
 # Activity:
 
@@ -17,8 +19,9 @@ class Activity(db.Model):
     capacity = db.Column(db.Integer, nullable=True)  # Maximum number of participants.
     teacher_id = db.Column(db.String(8), db.ForeignKey('teachers.dni'), nullable=False)  
     # Foreign key to the teacher.
-    status = db.Column(db.String(20), nullable=False, default='active')  # 'active', 'inactive', etc.
-
+    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVO)
+    
+    teacher = db.relationship("Teacher", back_populates="activity", uselist=False)
     activity_enrollments = db.relationship("ActivityEnrollment", back_populates="activity", cascade="all, delete-orphan")
 
     def __repr__(self):
