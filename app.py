@@ -2,17 +2,26 @@
 
 # Import necessary modules from Flask and database setup:
 
+import os
 from flask import Flask, render_template
+
+# Importing extensions and database setup functions:
+
 from extensions import db, migrate, init_app
 from database_setup import create_database
-from models.member import Member  # Importing models to ensure it's registered with SQLAlchemy.
+
+# Importing models to ensure it's registered with SQLAlchemy:
+
+from models.member import Member  
 from models.professional import Professional
 from models.teacher import Teacher
 from models.activity import Activity
 from models.activity_enrollment import ActivityEnrollment
 from models.appointments import Appointment
 from models.payment import Payment
-import os
+
+# Importing the blueprint for member routes:
+
 from endpoints.member_routes import member_bp
 
 # Configure the Flask app and database:
@@ -27,8 +36,12 @@ create_database(app)  # Create the database if it doesn't exist.
 # Define a route for the home page:
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
+
+@app.route("/nuevo_socio", methods=["GET", "POST"])
+def add_member():
+    return render_template("add_member.html")
 
 app.register_blueprint(member_bp, url_prefix='/api')  # Registering the member routes blueprint.
 

@@ -22,10 +22,11 @@ def convert_dates(data):
 @member_bp.route('/members', methods=['POST'])
 def create_member():
     try:
-        data = request.json
+        data = request.get_json()
         print("JSON recibido:", data)
         if not data:
             return jsonify({"error": "No se recibieron datos"}), 400
+        
         new_member = Member(
             dni=generate_full_dni(data.get('gender'), data.get('dni')),
             gender=data.get('gender'),

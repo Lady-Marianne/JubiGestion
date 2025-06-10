@@ -21,8 +21,8 @@ class Activity(db.Model):
     # Foreign key to the teacher.
     status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVE)
     
-    teacher = db.relationship("Teacher", back_populates="activity", uselist=False)
-    activity_enrollments = db.relationship("ActivityEnrollment", back_populates="activities", cascade="all, delete-orphan")
+    teachers = db.relationship("Teacher", back_populates="activity", uselist=False, foreign_keys=[teacher_dni], remote_side=[teacher_dni])
+    activity_enrollments = db.relationship("ActivityEnrollment", back_populates="activity", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Activity {self.name} ({str(self.status)})>"

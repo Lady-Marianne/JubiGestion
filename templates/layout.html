@@ -1,25 +1,37 @@
 <!-- 
     templates/layout.html
-    Es una plantilla reutilizable para que no tengamos que repetir el HTML entero en cada archivo.
-    Usamos el motor de plantillas de Flask llamado Jinja2.
+    "Base template using Jinja2. Other pages will inherit from this one."
 -->
 
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
     <meta charset="UTF-8">
-    <title>JubiGestion</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}JubiGestión{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
         <h1>JubiGestión</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Inicio</a> |
+            <a href="{{ url_for('add_member') }}">Agregar nuevo socio</a>
+        </nav>
     </header>
+
     <main>
         {% block content %}{% endblock %}
     </main>
+
     <footer>
         <p>Centro de Jubilados · Sistema en desarrollo</p>
     </footer>
+
+    <!-- Block for specific scripts for each view -->
+    {% block scripts %}{% endblock %}
 </body>
 </html>
