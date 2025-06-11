@@ -1,16 +1,19 @@
-# Archivos temporales de Python:
+# Python bytecode and cache files:
 __pycache__/
 *.py[cod]
 *.pyo
 
-# Archivos del sistema operativo:
+# OS archive files:
 .DS_Store
 Thumbs.db
 
-# Archivos temporales o de logs comunes:
+# Temporary or common log files:
 *.log
 
-# Entornos virtuales:
+# Virtual environments:
 jubi_gestion/
+
+# Ignore "database" directory and its contents (temporarily):
+database/
 
 
