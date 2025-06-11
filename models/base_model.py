@@ -1,0 +1,26 @@
+# models/base_model.py
+
+from extensions import db
+from enum import Enum
+from datetime import date, datetime
+
+class BaseModel(db.Model):
+    __abstract__ = True  # A table is not created for this class, it serves as a base for other models.
+
+    def to_dict(self):
+        result = {}
+        for column in self.__table__.columns:
+            value = getattr(self, column.name)
+
+            # Convert enums to their value (For example: Gender.M -> 'M')
+            if isinstance(value, Enum):
+                result[column.name] = value.value
+
+            # Convert dates to string:
+            elif isinstance(value, (date, datetime)):
+                result[column.name] = value.isoformat()
+
+            else:
+                result[column.name] = value
+
+        return result

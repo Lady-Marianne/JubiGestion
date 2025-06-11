@@ -17,11 +17,11 @@ class Activity(db.Model):
     start_date = db.Column(db.Date, nullable=False, default=date.today)
     end_date = db.Column(db.Date, nullable=True)
     capacity = db.Column(db.Integer, nullable=True)  # Maximum number of participants.
-    teacher_dni = db.Column(db.String(8), db.ForeignKey('teachers.dni'), nullable=False)  
+    # teacher_dni = db.Column(db.String(8), db.ForeignKey('teachers.dni'), nullable=False)  
     # Foreign key to the teacher.
-    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVE)
+    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVO)
     
-    teachers = db.relationship("Teacher", back_populates="activity", uselist=False, foreign_keys=[teacher_dni], remote_side=[teacher_dni])
+    teachers = db.relationship("Teacher", back_populates="activity", cascade="all, delete-orphan")
     activity_enrollments = db.relationship("ActivityEnrollment", back_populates="activity", cascade="all, delete-orphan")
 
     def __repr__(self):

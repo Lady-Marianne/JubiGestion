@@ -6,10 +6,12 @@
     <h1>Agregar nuevo socio:</h1>
     <form method="POST" action="{{ url_for('member.create_member') }}">
         <label>DNI: <input type="text" name="dni"></label><br>
-        <label>Sexo: <input type="text" name="gender"></label><br>
+        <p><strong>Sexo:</strong></p>
+        <label><input type="radio" name="gender" value="M"> Masculino</label><br>
+        <label><input type="radio" name="gender" value="F"> Femenino</label><br>
         <label>Nombres: <input type="text" name="first_names"></label><br>
         <label>Apellido: <input type="text" name="last_name"></label><br>
-        <label>Nro. de afiliado de PAMI: <input type="text" name="pami_number"></label><br>
+        <label>Nro. de afiliado de PAMI (si corresponde): <input type="text" name="pami_number"></label><br>
         <label>Fecha de nacimiento: <input type="date" name="birth_date"></label><br>
         <label>Teléfono: <input type="text" name="phone"></label><br>
         <label>Correo electrónico: <input type="email" name="email"></label><br>
@@ -23,5 +25,5 @@
     <script src="{{ url_for('static', filename='scripts/member_form.js') }}"></script>
 {% endblock %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/member_form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}

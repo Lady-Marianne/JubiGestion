@@ -15,7 +15,7 @@ class ActivityEnrollment(db.Model):
     member_dni = db.Column(db.String(8), db.ForeignKey('members.dni'), nullable=False)
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
     enrollment_date = db.Column(db.Date, nullable=False, default=func.current_date())
-    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVE)
+    status = db.Column(SQLAlchemyEnum(ActivityStatus), nullable=False, default=ActivityStatus.ACTIVO)
 
     member = db.relationship("Member", back_populates="activity_enrollments")
     activity = db.relationship("Activity", back_populates="activity_enrollments")

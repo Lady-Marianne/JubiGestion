@@ -5,8 +5,9 @@ from datetime import date
 from sqlalchemy import func, Enum as SQLAlchemyEnum
 from utils.dni_utils import generate_full_dni
 from models.enums import PersonStatus, Gender
+from models.base_model import BaseModel
 from utils.validators import is_valid_email
-class BasePerson(db.Model):
+class BasePerson(BaseModel):
     __abstract__ = True  # SQLAlchemy doesn`t convert it into a table.
 
     dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
@@ -16,9 +17,9 @@ class BasePerson(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     birth_date = db.Column(db.Date, nullable=True)
     phone = db.Column(db.String(20), nullable=True)
-    email = db.Column(db.String(100), nullable=True)
+    _email = db.Column("email", db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=True)
-    status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVE)
+    status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 
     def __repr__(self):
@@ -41,6 +42,9 @@ class BasePerson(db.Model):
 
     @property
     def email(self):
+        """
+        Returns the email address.
+        """
         return self._email
 
     @email.setter
@@ -48,9 +52,8 @@ class BasePerson(db.Model):
         """
         Validates the email format before setting it.
         """
-        def email(self, value):
-            if value is not None:
-                valid, error = is_valid_email(value)
-                if not valid:
+        if value is not None:
+            valid, error = is_valid_email(value)
+            if not valid:
                     raise ValueError(error)
         self._email = value

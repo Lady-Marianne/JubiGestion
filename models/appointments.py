@@ -16,7 +16,7 @@ class Appointment(db.Model):
     professional_dni = db.Column(db.String(8), db.ForeignKey('professionals.dni'), nullable=False) 
     # Foreign key to the professional table.
     appointment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    status = db.Column(SQLAlchemyEnum(AppointmentStatus), nullable=False, default=AppointmentStatus.SCHEDULED)
+    status = db.Column(SQLAlchemyEnum(AppointmentStatus), nullable=False, default=AppointmentStatus.PROGRAMADO)
     # 'SCHEDULED', 'COMPLETED', 'CANCELED', etc.
 
     member = db.relationship("Member", back_populates="appointments")

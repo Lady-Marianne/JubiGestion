@@ -43,6 +43,10 @@ def index():
 def add_member():
     return render_template("add_member.html")
 
+@app.route("/ver_socios", methods=["GET"])
+def show_members():
+    return render_template("show_members.html")
+
 app.register_blueprint(member_bp, url_prefix='/api')  # Registering the member routes blueprint.
 
 if __name__ == '__main__':

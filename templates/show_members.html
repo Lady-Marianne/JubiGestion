@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Agregar nuevo socio{% endblock %}
+
+{% block content %}
+    <h1>Socios:</h1>
+    <form method="GET" action="{{ url_for('member.get_all_members') }}">
+        <table id="membersTable">
+            <thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Género</th>
+                    <th>Nombres</th>
+                    <th>Apellido</th>
+                    <th>Nro. PAMI</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- The members will be dynamically inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </form>
+
+{% endblock %}
+ {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/show_members.js') }}"></script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}

@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 member_bp = Blueprint('member', __name__)
 
-# Convertir fechas desde string a objetos date (si existen):
+# Convert dates from string to date objects (if they exist):
 def convert_dates(data):
     birth_date_str = data.get('birth_date')
     birth_date = datetime.strptime(birth_date_str, '%Y-%m-%d').date() if birth_date_str else None
@@ -37,7 +37,7 @@ def create_member():
             phone=data.get('phone'),
             email=data.get('email'),
             address=data.get('address'),
-            status=data.get('status', 'active'),
+            status=data.get('status', 'ACTIVO'),  # Default status is 'ACTIVO'.
             join_date=convert_dates(data)[1]
         )
         db.session.add(new_member)
@@ -53,7 +53,7 @@ def create_member():
 @member_bp.route('/members', methods=['GET'])
 def get_all_members():
     try:
-        members = Member.query.all()
+        members = Member.query.order_by(Member.last_name.asc()).all()
         members_data = [
             {
                 "dni": m.dni,
@@ -72,4 +72,5 @@ def get_all_members():
         ]
         return jsonify(members_data), 200
     except Exception as e:
+        print("ERROR AL TRAER SOCIOS:", e)
         return jsonify({"error": str(e)}), 500

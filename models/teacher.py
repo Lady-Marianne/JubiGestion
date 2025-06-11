@@ -8,8 +8,8 @@ from models.activity import Activity  # Opcional pero recomendable.
 class Teacher(BasePerson):
     __tablename__ = 'teachers'
 
-    activity_id = db.Column(db.Integer, db.ForeignKey("activities.id", name ="fk_teacher_activity"), nullable=False)  # Foreign key to activities.
-    activity = db.relationship("Activity", back_populates="teachers", foreign_keys=[activity_id])  # Specify foreign key.
+    activity_id = db.Column(db.Integer, db.ForeignKey("activities.id"), nullable=False)  # Foreign key to activities.
+    activity = db.relationship("Activity", back_populates="teachers")
 
     def __repr__(self):
         return f"<Teacher {self.first_names} {self.last_name} ({str(self.status)})>"

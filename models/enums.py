@@ -4,37 +4,37 @@ from models.base_enum import BaseEnum
 from sqlalchemy import Enum as SQLAlchemyEnum
 
 class PersonStatus(BaseEnum):
-    ACTIVE = "ACTIVO"
-    SUSPENDED = "SUSPENDIDO"
-    DELETED = "ELIMINADO"
+    ACTIVO = "ACTIVO"
+    SUSPENDIDO = "SUSPENDIDO"
+    ELIMINADO = "ELIMINADO"
 
 class ActivityStatus(BaseEnum):
-    ACTIVE = "ACTIVO"
-    SUSPENDED = "SUSPENDIDO"
-    CANCELED = "CANCELADO"
+    ACTIVO = "ACTIVO"
+    SUSPENDIDO = "SUSPENDIDO"
+    CANCELADO = "CANCELADO"
 
 class AppointmentStatus(BaseEnum):
-    SCHEDULED = "PROGRAMADO"
-    COMPLETED = "COMPLETADO"
+    PROGRAMADO = "PROGRAMADO"
+    COMPLETADO = "COMPLETADO"
     CANCELED = "CANCELADO"
 
 class Gender(BaseEnum):
-    MALE = "M"
-    FEMALE = "F"
+    M = "M"
+    F = "F"
 
     def __str__(self):
-        return "Masculino" if self == Gender.MALE else "Femenino"
+        return "Masculino" if self == Gender.M else "Femenino"
 class Profession(BaseEnum):
-    LAWYER = "ABOGADO"
-    NURSE = "ENFERMERO"    
-    MASSEUR = "MASAJISTA"
-    GENERAL_PRACTITIONER = "MÉDICO DE CABECERA"
-    NUTRITIONIST = "NUTRICIONISTA"
-    PSYCHOLOGIST = "PSICÓLOGO"
-    PSYCHIATRIST = "PSIQUIATRA"
-    PODOLOGIST = "PODÓLOGO"
+    ABOGADO = "ABOGADO"
+    ENFERMERO = "ENFERMERO"
+    REFLEXÓLOGA = "REFLEXÓLOGA"
+    MÉDICO_DE_CABECERA = "MÉDICO DE CABECERA"
+    NUTRICIONISTA = "NUTRICIONISTA"
+    PSICÓLOGO = "PSICÓLOGO"
+    PSIQUIATRA = "PSIQUIATRA"
+    PODÓLOGO = "PODÓLOGO"
 
 class PaymentStatus(BaseEnum):
-    PENDING = "PENDIENTE"
-    PAID = "PAGADO"
-    CANCELED = "CANCELADO"
+    PENDIENTE = "PENDIENTE"
+    PAGADO = "PAGADO"
+    CANCELADO = "CANCELADO"
