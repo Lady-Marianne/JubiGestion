@@ -33,7 +33,6 @@ def create_member():
             gender=data.get('gender'),
             first_names=data.get('first_names'),
             last_name=data.get('last_name'),
-            pami_number=data.get('pami_number'),
             birth_date=convert_dates(data)[0],
             phone=data.get('phone'),
             email=data.get('email'),
@@ -41,6 +40,9 @@ def create_member():
             status=data.get('status', 'ACTIVO'),  # Default status is 'ACTIVO'.
             join_date=convert_dates(data)[1]
         )
+        
+        # This calls the setter for pami_number, which validates it:
+        new_member.pami_number = data.get('pami_number')
 
         db.session.add(new_member)
         db.session.commit()

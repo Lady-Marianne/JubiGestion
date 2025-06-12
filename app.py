@@ -17,7 +17,10 @@ from models.professional import Professional
 from models.teacher import Teacher
 from models.activity import Activity
 from models.activity_enrollment import ActivityEnrollment
+"""
 from models.appointments import Appointment
+(This import is commented out because it is not used in this file, by now.)
+"""
 from models.payment import Payment
 
 # Importing the blueprint for member routes:

@@ -1,3 +1,7 @@
+""" 
+This module is currently not in use, as appointments are managed through WhatsApp.
+It is included here for future reference or potential use in the application.
+
 # models/appointments.py:
 
 from datetime import datetime
@@ -17,10 +21,11 @@ class Appointment(db.Model):
     # Foreign key to the professional table.
     appointment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(SQLAlchemyEnum(AppointmentStatus), nullable=False, default=AppointmentStatus.PROGRAMADO)
-    # 'SCHEDULED', 'COMPLETED', 'CANCELED', etc.
+    # 'PROGRAMADO', 'COMPLETADO', 'CANCELADO', etc.
 
     member = db.relationship("Member", back_populates="appointments")
     professional = db.relationship("Professional", back_populates="appointments")
     
     def __repr__(self):
         return f"<Appointment {self.id} for {self.member_dni} with {self.professional_dni} on {self.appointment_date}>"
+"""
