@@ -52,7 +52,7 @@ def create_member():
         return jsonify({"error": str(e)}), 400
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({"error": "El nro. de DNI o de PAMI ya existe"}), 400
+        return jsonify({"error": "El nro. de DNI ya existe"}), 400
     
 @member_bp.route('/members', methods=['GET'])
 def get_all_members():

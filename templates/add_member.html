@@ -19,10 +19,10 @@
         <label>Fecha de ingreso: <input type="date" name="join_date"></label><br>
         <button type="submit">Guardar</button>
     </form>
-
 {% endblock %}
- {% block scripts %}
-    <script src="{{ url_for('static', filename='scripts/member_form.js') }}"></script>
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/add_member.js') }}"></script>
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">

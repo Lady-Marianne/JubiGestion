@@ -17,10 +17,6 @@ from models.professional import Professional
 from models.teacher import Teacher
 from models.activity import Activity
 from models.activity_enrollment import ActivityEnrollment
-"""
-from models.appointments import Appointment
-(This import is commented out because it is not used in this file, by now.)
-"""
 from models.payment import Payment
 
 # Importing the blueprint for member routes:
@@ -49,6 +45,14 @@ def add_member():
 @app.route("/ver_socios", methods=["GET"])
 def show_members():
     return render_template("show_members.html")
+
+@app.route("/nueva_actividad", methods=["GET", "POST"])
+def add_activity():
+    return render_template("add_activity.html")
+
+@app.route("/ver_actividades", methods=["GET"])
+def show_activities():
+    return render_template("show_activities.html")
 
 app.register_blueprint(member_bp, url_prefix='/api')  # Registering the member routes blueprint.
 

@@ -10,7 +10,7 @@ from sqlalchemy import Enum as SQLAlchemyEnum
 class Activity(db.Model):
     __tablename__ = 'activities'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False, unique=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(200), nullable=True)
     schedule = db.Column(db.String(100), nullable=True)  # e.g., "Monday, Wednesday 10:00-12:00".
