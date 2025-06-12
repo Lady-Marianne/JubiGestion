@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Actividades y talleres:{% endblock %}
+
+{% block content %}
+    <h1>Actividades y talleres:</h1>
+    <form method="GET" action="{{ url_for('activity.get_all_activities') }}">
+        <table id="activitiesTable">
+            <thead>
+                <tr>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Horario</th>
+                    <th>Fecha de inicio</th>
+                    <th>Fecha de fin</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- The activities will be dynamically inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </form>
+
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/activity_scripts/show_activities.js') }}"></script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}

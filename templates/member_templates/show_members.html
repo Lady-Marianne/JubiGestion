@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Socios:</h1>
-    <form method="GET" action="{{ url_for('member.get_all_members') }}">
+    <form method="GET" action="{{ url_for('show_members.get_all_members') }}">
         <table id="membersTable">
             <thead>
                 <tr>
@@ -28,7 +28,7 @@
 
 {% endblock %}
  {% block scripts %}
-    <script src="{{ url_for('static', filename='scripts/show_members.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/member_scripts/show_members.js') }}"></script>
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">

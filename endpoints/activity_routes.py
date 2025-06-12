@@ -18,7 +18,7 @@ def convert_dates(data):
 
     return start_date, end_date
 
-@activity_bp.route('/activities', methods=['POST'])
+@activity_bp.route('/activities/new', methods=['POST'])
 def create_activity():
     try:
         data = request.get_json()
