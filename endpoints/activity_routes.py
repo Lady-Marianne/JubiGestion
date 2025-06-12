@@ -1,5 +1,5 @@
 # endpoints/activity_routes.py:
-from flask import Blueprint, request, jsonify
+from flask import Flask, render_template, Blueprint, request, jsonify
 from models.activity import Activity
 from extensions import db
 from datetime import datetime
@@ -17,6 +17,14 @@ def convert_dates(data):
     end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date() if end_date_str else None
 
     return start_date, end_date
+
+@activity_bp.route("/nueva_actividad", methods=["GET", "POST"])
+def add_activity():
+    return render_template("activity_templates/add_activity.html")
+
+@activity_bp.route("/ver_actividades", methods=["GET"])
+def show_activities():
+    return render_template("activity_templates/show_activities.html")
 
 @activity_bp.route('/activities/new', methods=['POST'])
 def create_activity():

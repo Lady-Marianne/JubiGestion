@@ -1,6 +1,6 @@
 # endpoints/member_routes.py:
 
-from flask import Blueprint, request, jsonify
+from flask import Flask, render_template, Blueprint, request, jsonify
 from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
@@ -19,6 +19,14 @@ def convert_dates(data):
     join_date = datetime.strptime(join_date_str, '%Y-%m-%d').date() if join_date_str else None
 
     return birth_date, join_date
+
+@member_bp.route("/nuevo_socio", methods=["GET", "POST"])
+def add_member():
+    return render_template("member_templates/add_member.html")
+
+@member_bp.route("/ver_socios", methods=["GET"])
+def show_members():
+    return render_template("member_templates/show_members.html")
 
 @member_bp.route('/members', methods=['POST'])
 def create_member():

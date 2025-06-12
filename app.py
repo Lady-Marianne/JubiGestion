@@ -22,6 +22,7 @@ from models.payment import Payment
 # Importing the blueprint for member routes:
 
 from endpoints.member_routes import member_bp
+from endpoints.activity_routes import activity_bp
 
 # Configure the Flask app and database:
 
@@ -38,23 +39,8 @@ create_database(app)  # Create the database if it doesn't exist.
 def index():
     return render_template('index.html')
 
-@app.route("/nuevo_socio", methods=["GET", "POST"])
-def add_member():
-    return render_template("member_templates/add_member.html")
-
-@app.route("/ver_socios", methods=["GET"])
-def show_members():
-    return render_template("member_templates/show_members.html")
-
-@app.route("/nueva_actividad", methods=["GET", "POST"])
-def add_activity():
-    return render_template("activity_templates/add_activity.html")
-
-@app.route("/ver_actividades", methods=["GET"])
-def show_activities():
-    return render_template("activity_templates/show_activities.html")
-
-app.register_blueprint(member_bp, url_prefix='/api')  # Registering the member routes blueprint.
+app.register_blueprint(member_bp, url_prefix='/api/members')
+app.register_blueprint(activity_bp, url_prefix='/api/activities')
 
 if __name__ == '__main__':
     app.run(debug=True)
