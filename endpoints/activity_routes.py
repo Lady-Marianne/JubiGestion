@@ -53,7 +53,7 @@ def create_activity():
         db.session.rollback()
         return jsonify({"error": "Error de integridad, verifique los datos"}), 400
     
-@activity_bp.route('/activities', methods=['GET'])
+@activity_bp.route('/activities/all', methods=['GET'])
 def get_all_activities():
     try:
         activities = Activity.query.order_by(Activity.name.asc()).all()

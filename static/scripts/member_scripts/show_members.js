@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!membersTable) return; // If we are not on the members list page, exit.
 
     try {
-        const response = await fetch("/api/members");
+        const response = await fetch("/api/members/all");
         const members = await response.json();
 
         // Log the raw response from the server for debugging purposes:

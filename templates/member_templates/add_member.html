@@ -1,29 +1,55 @@
+<!-- /templates/member_templates/add_member.html -->
+
 {% extends "layout.html" %}
 
-{% block title %}Agregar nuevo socio{% endblock %}
+{% block title %}Agregar nuevo socio:{% endblock %}
 
 {% block content %}
-    <h1>Agregar nuevo socio:</h1>
-    <form method="POST" action="{{ url_for('member.create_member') }}">
-        <label>DNI: <input type="text" name="dni"></label><br>
-        <p><strong>Sexo:</strong></p>
-        <label><input type="radio" name="gender" value="M"> Masculino</label><br>
-        <label><input type="radio" name="gender" value="F"> Femenino</label><br>
-        <label>Nombres: <input type="text" name="first_names"></label><br>
-        <label>Apellido: <input type="text" name="last_name"></label><br>
-        <label>Nro. de afiliado de PAMI (si corresponde): <input type="text" name="pami_number" maxlength="14"></label><br>
-        <label>Fecha de nacimiento: <input type="date" name="birth_date"></label><br>
-        <label>Teléfono: <input type="text" name="phone"></label><br>
-        <label>Correo electrónico: <input type="email" name="email"></label><br>
-        <label>Dirección: <input type="text" name="address"></label><br>
-        <label>Fecha de ingreso: <input type="date" name="join_date"></label><br>
-        <button type="submit">Guardar</button>
-    </form>
+<h1>Agregar nuevo socio</h1>
+
+<!-- Container for error or success messages -->
+<div id="message-box" style="color: red; font-weight: bold;"></div>
+
+<form id="add-member-form">
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" id="dni" required><br>
+
+    <p><strong>Sexo:</strong></p>
+    <label><input type="radio" name="gender" value="M"> Masculino</label>
+    <label><input type="radio" name="gender" value="F"> Femenino</label><br>
+
+    <label for="first_names">Nombres:</label>
+    <input type="text" name="first_names" id="first_names" required><br>
+
+    <label for="last_name">Apellido:</label>
+    <input type="text" name="last_name" id="last_name" required><br>
+
+    <label for="pami_number">Nro. de afiliado de PAMI (si corresponde):</label>
+    <input type="text" name="pami_number" id="pami_number" maxlength="14"><br>
+
+    <label for="birth_date">Fecha de nacimiento:</label>
+    <input type="date" name="birth_date" id="birth_date" required><br>
+
+    <label for="phone">Teléfono:</label>
+    <input type="text" name="phone" id="phone" required><br>
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" name="email" id="email" required><br>
+
+    <label for="address">Dirección:</label>
+    <input type="text" name="address" id="address" required><br>
+
+    <label for="join_date">Fecha de ingreso:</label>
+    <input type="date" name="join_date" id="join_date" required><br>
+
+    <button type="submit">Guardar</button>
+</form>
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='scripts/member_scripts/add_member.js') }}"></script>
 {% endblock %}
+
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}

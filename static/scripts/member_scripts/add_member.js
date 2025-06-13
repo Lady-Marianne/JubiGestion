@@ -1,15 +1,21 @@
+// static/scripts/member_scripts/add_member.js:
+
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
+    const form = document.getElementById("add-member-form");
+    const messageBox = document.getElementById("message-box");
 
     form.addEventListener("submit", async function (event) {
-        event.preventDefault();  // Avoids that the form is submitted traditionally.
+        event.preventDefault(); // Prevent traditional submission.
 
-        // Bring data from the form:
+        // Clear previous messages:
+        messageBox.textContent = "";
+        messageBox.style.color = "red";
+
+        // Get form data:
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());  // Convert FormData to an object.
+        const data = Object.fromEntries(formData.entries());
 
-        // Validations before sending data.
-        // We check that all required fields are filled:
+        // Validations:
         const errors = [];
         if (!data.dni || data.dni.trim() === "") errors.push("El DNI es obligatorio.");
         if (!data.gender || data.gender.trim() === "") errors.push("El sexo es obligatorio.");
@@ -21,34 +27,33 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!data.address || data.address.trim() === "") errors.push("La dirección es obligatoria.");
         if (!data.join_date) errors.push("La fecha de ingreso es obligatoria.");
 
-        // If there are errors, show alerts and exit:
         if (errors.length > 0) {
-            alert("Errores: \n" + errors.join("\n"));
-            return;  // We stop the form submission if there are errors.
+            messageBox.textContent = "Errores:\n" + errors.join("\n");
+            return;
         }
 
-        // Send the data to the server:
+        // Send data:
         try {
-            // Log the data to be sent:
-            console.log("Datos a enviar:", data);
-            const response = await fetch("/api/members", {  // We use /api/members to send the request.
+            const response = await fetch("/members/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(data)  // Convert data to JSON format.
+                body: JSON.stringify(data)
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                alert("Socio creado exitosamente: " + result.member);
-                form.reset();  // Clean the form.
+                messageBox.style.color = "green";
+                messageBox.textContent = "Socio creado exitosamente: " + result.member;
+                form.reset();
             } else {
-                alert("Error: " + result.error);  // Show error if the server returns an error.
+                messageBox.textContent = "Error: " + result.error;
             }
         } catch (error) {
-            alert("Error de conexión: " + error.message);  // Handle connection errors.
+            messageBox.textContent = "Error de conexión: " + error.message;
         }
     });
 });
+// This script handles the addition of a new member to the system.

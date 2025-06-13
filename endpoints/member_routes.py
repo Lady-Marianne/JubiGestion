@@ -1,6 +1,6 @@
 # endpoints/member_routes.py:
 
-from flask import Flask, render_template, Blueprint, request, jsonify
+from flask import render_template, Blueprint, request, jsonify
 from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
@@ -28,7 +28,7 @@ def add_member():
 def show_members():
     return render_template("member_templates/show_members.html")
 
-@member_bp.route('/members', methods=['POST'])
+@member_bp.route('/create', methods=['POST'])
 def create_member():
     try:
         data = request.get_json()
@@ -55,14 +55,15 @@ def create_member():
         db.session.add(new_member)
         db.session.commit()
         return jsonify({"message": "Socio creado exitosamente", "member": new_member.dni}), 201
+    
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "El nro. de DNI ya existe"}), 400
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
-    except IntegrityError as e:
-        db.session.rollback()
-        return jsonify({"error": "El nro. de DNI ya existe"}), 400
     
-@member_bp.route('/members', methods=['GET'])
+@member_bp.route('/all', methods=['GET'])
 def get_all_members():
     try:
         members = Member.query.order_by(Member.last_name.asc()).all()
