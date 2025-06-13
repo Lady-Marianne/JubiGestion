@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("add-activity-form");
     const messageBox = document.getElementById("message-box");
 
+    if (!form || !messageBox) {
+    console.warn("Formulario o messageBox no encontrados. ¿Estás en la página correcta?");
+    return;
+    }
+
     form.addEventListener("submit", async function (event) {
         event.preventDefault();  // Avoids that the form is submitted traditionally.
 
@@ -42,16 +47,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const result = await response.json();
 
-            if (response.ok) {
+           if (response.ok) {
                 messageBox.style.color = "green";
-                messageBox.textContent = "Actividad creada exitosamente: " + result.activity;
+                messageBox.textContent = result.activity
+                    ? "Actividad creada exitosamente: " + result.activity
+                    : "Actividad creada exitosamente.";
                 form.reset();
             } else {
-                messageBox.textContent = "Error: " + result.error;
+                messageBox.textContent = "Error: " + (result.error || "Respuesta inválida del servidor.");
             }
 
         } catch (error) {
             alert("Error de conexión: " + error.message);  // Handle connection errors.
+
+            messageBox.scrollIntoView({ behavior: "smooth" });
+
         }
     });
 });

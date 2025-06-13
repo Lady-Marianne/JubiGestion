@@ -1,3 +1,5 @@
+<!-- static/scripts/activity_scripts/add_activity.html -->
+
 {% extends "layout.html" %}
 
 {% block title %}Agregar nueva actividad o taller{% endblock %}
@@ -9,12 +11,12 @@
     <div id="message-box" style="color: red; font-weight: bold;"></div>
     
     <form id="add-activity-form">
-        <label>Nombre: <input type="text" name="name"></label><br>
+        <label>Nombre: <input type="text" name="name" required></label><br>
         <label>Descripción: <textarea name="description"></textarea></label><br>
-        <label>Horario: <input type="text" name="schedule"></label><br>
-        <label>Fecha de inicio: <input type="date" name="start_date"></label><br>
-        <label>Fecha de fin: <input type="date" name="end_date"></label><br>
-        <label>Nro. máximo de participantes: <input type="number" name="capacity"></label><br>
+        <label>Horario: <input type="text" name="schedule" required></label><br>
+        <label>Fecha de inicio: <input type="date" name="start_date" required></label><br>
+        <label>Fecha de fin: <input type="date" name="end_date" required></label><br>
+        <label>Nro. máximo de participantes: <input type="number" name="capacity" min="1" required></label><br>
         <button type="submit">Guardar</button>
     </form>
 {% endblock %}
