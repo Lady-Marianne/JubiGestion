@@ -1,8 +1,15 @@
+// static/scripts/activity_scripts/add_activity.js:
+
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
+    const form = document.querySelector("add-activity-form");
+    const messageBox = document.getElementById("message-box");
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();  // Avoids that the form is submitted traditionally.
+
+        // Clear previous messages:
+        messageBox.textContent = "";
+        messageBox.style.color = "red";
 
         // Bring data from the form:
         const formData = new FormData(form);
@@ -12,10 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // We check that all required fields are filled:
         const errors = [];
         if (!data.name || data.name.trim() === "") errors.push("El nombre de la actividad es obligatorio.");
+        if (!data.schedule || data.schedule.trim() === "") errors.push("El horario de la actividad es obligatorio.");
         if (!data.start_date) errors.push("La fecha de inicio de la actividad es obligatoria.");
         if (!data.end_date) errors.push("La fecha de fin de la actividad es obligatoria.");
-        if (!data.schedule || data.schedule.trim() === "") errors.push("El horario de la actividad es obligatorio.");
-        if (!data.description || data.description.trim() === "") errors.push("La descripción de la actividad es obligatoria.");
         if (!data.capacity || data.capacity.trim() === "") errors.push("La capacidad de la actividad es obligatoria.");
 
         // If there are errors, show alerts and exit:
@@ -26,8 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Send the data to the server:
         try {
-            console.log("Datos a enviar:", data);
-            const response = await fetch("/api/activities", {  // We use /api/activities to send the request.
+            const response = await fetch("/api/activities/new", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -38,11 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                alert("Actividad creada exitosamente: " + result.activity);
-                form.reset();  // Clean the form.
+                messageBox.style.color = "green";
+                messageBox.textContent = "Actividad creada exitosamente: " + result.activity;
+                form.reset();
             } else {
-                alert("Error: " + result.error);  // Show error if the server returns an error.
+                messageBox.textContent = "Error: " + result.error;
             }
+
         } catch (error) {
             alert("Error de conexión: " + error.message);  // Handle connection errors.
         }

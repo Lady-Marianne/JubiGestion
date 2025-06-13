@@ -1,5 +1,6 @@
 # endpoints/activity_routes.py:
-from flask import Flask, render_template, Blueprint, request, jsonify
+
+from flask import render_template, Blueprint, request, jsonify
 from models.activity import Activity
 from extensions import db
 from datetime import datetime
@@ -53,19 +54,13 @@ def create_activity():
         db.session.rollback()
         return jsonify({"error": "Error de integridad, verifique los datos"}), 400
     
-@activity_bp.route('/activities/all', methods=['GET'])
+@activity_bp.route('/all', methods=['GET'])
 def get_all_activities():
     try:
         activities = Activity.query.order_by(Activity.name.asc()).all()
-        return jsonify([{
-            "id": activity.id,
-            "name": activity.name,
-            "description": activity.description,
-            "schedule": activity.schedule,
-            "start_date": activity.start_date.isoformat(),
-            "end_date": activity.end_date.isoformat() if activity.end_date else None,
-            "max_participants": activity.capacity,
-            "status": activity.status.name
-        } for activity in activities]), 200
+        activities_data = jsonify([m.to_dict() for m in activities])
+
+        return activities_data, 200
     except Exception as e:
+        print("ERROR AL TRAER ACTIVIDADES:", e)
         return jsonify({"error": str(e)}), 500

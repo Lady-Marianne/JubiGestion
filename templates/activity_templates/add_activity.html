@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
 
-{% block title %}Agregar nueva actividad o taller:{% endblock %}
+{% block title %}Agregar nueva actividad o taller{% endblock %}
 
 {% block content %}
     <h1>Agregar nueva actividad o taller:</h1>
-    <form method="POST" action="{{ url_for('activity.create_activity') }}">
+
+    <!-- Container for error or success messages -->
+    <div id="message-box" style="color: red; font-weight: bold;"></div>
+    
+    <form id="add-activity-form">
         <label>Nombre: <input type="text" name="name"></label><br>
         <label>Descripción: <textarea name="description"></textarea></label><br>
         <label>Horario: <input type="text" name="schedule"></label><br>

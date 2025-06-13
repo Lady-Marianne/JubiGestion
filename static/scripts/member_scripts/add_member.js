@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Send data:
         try {
-            const response = await fetch("/members/create", {
+            const response = await fetch("/api/members/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
