@@ -10,15 +10,6 @@ from flask import Flask, render_template
 from extensions import db, migrate, init_app
 from database_setup import create_database
 
-# Importing models to ensure it's registered with SQLAlchemy:
-
-from models.member import Member  
-from models.professional import Professional
-from models.teacher import Teacher
-from models.activity import Activity
-from models.activity_enrollment import ActivityEnrollment
-from models.payment import Payment
-
 # Importing the blueprint for member routes:
 
 from endpoints.member_routes import member_bp
