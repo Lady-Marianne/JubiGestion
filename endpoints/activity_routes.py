@@ -5,19 +5,9 @@ from models.activity import Activity
 from extensions import db
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
+from utils.date_utils import parse_dates
 
 activity_bp = Blueprint('activity', __name__)
-
-# Convert dates from string to date objects (if they exist):
-
-def convert_dates(data):
-    start_date_str = data.get('start_date')
-    start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date() if start_date_str else None
-
-    end_date_str = data.get('end_date')
-    end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date() if end_date_str else None
-
-    return start_date, end_date
 
 @activity_bp.route("/nueva_actividad", methods=["GET", "POST"])
 def add_activity():
@@ -27,6 +17,11 @@ def add_activity():
 def show_activities():
     return render_template("activity_templates/show_activities.html")
 
+from flask import request, jsonify
+from sqlalchemy.exc import IntegrityError
+from utils.date_utils import parse_dates
+from models import Activity, db  # Asegurate de importar lo necesario
+
 @activity_bp.route('/new', methods=['POST'])
 def create_activity():
     try:
@@ -34,26 +29,35 @@ def create_activity():
         if not data:
             return jsonify({"error": "No se recibieron datos"}), 400
 
+        # Convert date fields:
+        parsed_dates = parse_dates(data, ['start_date', 'end_date'])
+        
         new_activity = Activity(
             name=data.get('name'),
             description=data.get('description'),
-            schedule=data.get('schedule'),  # e.g., "Monday, Wednesday 10:00-12:00".
-            start_date=convert_dates(data)[0],
-            end_date=convert_dates(data)[1],
+            schedule=data.get('schedule'),
+            start_date=parsed_dates.get('start_date'),
+            end_date=parsed_dates.get('end_date'),
             capacity=data.get('capacity', 0),
-            status=data.get('status', 'ACTIVO')  # Default status is 'ACTIVO'.
-        )        
+            status=data.get('status', 'ACTIVO')
+        )
 
         db.session.add(new_activity)
         db.session.commit()
-        return jsonify({"message": "Actividad creada exitosamente", "activity_id": new_activity.id}), 201
+
+        return jsonify({
+            "message": "Actividad creada exitosamente",
+            "activity_id": new_activity.id
+        }), 201
+
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "Error de integridad, verifique los datos"}), 400
+
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
-    except IntegrityError as e:
-        db.session.rollback()
-        return jsonify({"error": "Error de integridad, verifique los datos"}), 400
-    
+
 @activity_bp.route('/all', methods=['GET'])
 def get_all_activities():
     try:

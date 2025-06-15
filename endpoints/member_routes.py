@@ -4,6 +4,7 @@ from flask import render_template, Blueprint, request, jsonify
 from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
+from utils.date_utils import parse_dates
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
@@ -33,32 +34,41 @@ def create_member():
     try:
         data = request.get_json()
         print("JSON recibido:", data)
+
         if not data:
             return jsonify({"error": "No se recibieron datos"}), 400
-        
+
+        # Parse birth_date y join_date:
+        parsed_dates = parse_dates(data, ['birth_date', 'join_date'])
+
         new_member = Member(
             dni=generate_full_dni(data.get('gender'), data.get('dni')),
             gender=data.get('gender'),
             first_names=data.get('first_names'),
             last_name=data.get('last_name'),
-            birth_date=convert_dates(data)[0],
+            birth_date=parsed_dates.get('birth_date'),
             phone=data.get('phone'),
             email=data.get('email'),
             address=data.get('address'),
-            status=data.get('status', 'ACTIVO'),  # Default status is 'ACTIVO'.
-            join_date=convert_dates(data)[1]
+            status=data.get('status', 'ACTIVO'),
+            join_date=parsed_dates.get('join_date')
         )
-        
-        # This calls the setter for pami_number, which validates it:
+
+        # Setter with validation:
         new_member.pami_number = data.get('pami_number')
 
         db.session.add(new_member)
         db.session.commit()
-        return jsonify({"message": "Socio creado exitosamente", "member": new_member.dni}), 201
-    
+
+        return jsonify({
+            "message": "Socio creado exitosamente",
+            "member": new_member.dni
+        }), 201
+
     except IntegrityError:
         db.session.rollback()
         return jsonify({"error": "El nro. de DNI ya existe"}), 400
+
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
