@@ -17,11 +17,6 @@ def add_activity():
 def show_activities():
     return render_template("activity_templates/show_activities.html")
 
-from flask import request, jsonify
-from sqlalchemy.exc import IntegrityError
-from utils.date_utils import parse_dates
-from models import Activity, db  # Asegurate de importar lo necesario
-
 @activity_bp.route('/new', methods=['POST'])
 def create_activity():
     try:
