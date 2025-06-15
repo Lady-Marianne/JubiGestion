@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!activitiesTable) return; // If we are not on the activities list page, exit.
 
     try {
-        const response = await fetch("/api/activities");
+        const response = await fetch("/api/activities/all");
         const activities = await response.json();
 
         // Log the raw response from the server for debugging purposes:
@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             const row = document.createElement("tr");
 
             row.innerHTML = `
+                <td>${activity.id}</td>
                 <td>${activity.name}</td>
+                <td>${activity.description}</td>
+                <td>${activity.schedule}</td>
                 <td>${activity.start_date}</td>
                 <td>${activity.end_date}</td>
-                <td>${activity.schedule}</td>
-                <td>${activity.description}</td>
                 <td>${activity.capacity}</td>
-                <td>${activity.members_count || 0}</td>
-            `;
+                <td>${activity.status}</td>`;
 
             tbody.appendChild(row);
         });

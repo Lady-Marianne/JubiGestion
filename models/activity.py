@@ -4,10 +4,11 @@ from datetime import date
 from extensions import db
 from models.enums import ActivityStatus
 from sqlalchemy import Enum as SQLAlchemyEnum
+from models.base_model import BaseModel
 
 # Activity:
 
-class Activity(db.Model):
+class Activity(BaseModel):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False, unique=True)

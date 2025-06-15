@@ -27,7 +27,7 @@ def add_activity():
 def show_activities():
     return render_template("activity_templates/show_activities.html")
 
-@activity_bp.route('/activities/new', methods=['POST'])
+@activity_bp.route('/new', methods=['POST'])
 def create_activity():
     try:
         data = request.get_json()
@@ -58,8 +58,7 @@ def create_activity():
 def get_all_activities():
     try:
         activities = Activity.query.order_by(Activity.name.asc()).all()
-        activities_data = jsonify([m.to_dict() for m in activities])
-
+        activities_data = jsonify([a.to_dict() for a in activities])
         return activities_data, 200
     except Exception as e:
         print("ERROR AL TRAER ACTIVIDADES:", e)

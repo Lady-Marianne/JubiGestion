@@ -7,6 +7,7 @@ from utils.dni_utils import generate_full_dni
 from models.enums import PersonStatus, Gender
 from models.base_model import BaseModel
 from utils.validators import is_valid_email
+
 class BasePerson(BaseModel):
     __abstract__ = True  # SQLAlchemy doesn`t convert it into a table.
 

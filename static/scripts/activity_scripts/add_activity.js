@@ -1,7 +1,7 @@
 // static/scripts/activity_scripts/add_activity.js:
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("add-activity-form");
+    const form = document.getElementById("add-activity-form");
     const messageBox = document.getElementById("message-box");
 
     if (!form || !messageBox) {
