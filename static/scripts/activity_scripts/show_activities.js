@@ -35,7 +35,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${activity.start_date}</td>
                 <td>${activity.end_date}</td>
                 <td>${activity.capacity}</td>
-                <td>${activity.status}</td>`;
+                <td>${activity.status}</td>
+                <td>
+                    <button class="edit-activity-btn" data-id="${activity.id}">Editar</button>
+                </td>`;
 
             tbody.appendChild(row);
         });
