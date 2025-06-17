@@ -1,4 +1,4 @@
-# models/base_model.py
+# models/base_model.py:
 
 from extensions import db
 from enum import Enum

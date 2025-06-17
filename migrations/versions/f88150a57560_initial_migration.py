@@ -1,8 +1,8 @@
 """Initial migration.
 
-Revision ID: d18f35a48e9d
+Revision ID: f88150a57560
 Revises: 
-Create Date: 2025-06-13 13:36:42.845610
+Create Date: 2025-06-17 14:40:03.907214
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd18f35a48e9d'
+revision = 'f88150a57560'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,6 +32,7 @@ def upgrade():
     )
     op.create_table('members',
     sa.Column('pami_number', sa.String(length=14), nullable=True),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dni', sa.String(length=8), nullable=False),
     sa.Column('gender', sa.Enum('M', 'F', name='gender'), nullable=False),
     sa.Column('first_names', sa.String(length=100), nullable=False),
@@ -42,13 +43,14 @@ def upgrade():
     sa.Column('address', sa.String(length=200), nullable=True),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
-    sa.PrimaryKeyConstraint('dni'),
+    sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('dni')
     )
     op.create_table('professionals',
     sa.Column('license_number', sa.String(length=20), nullable=True),
     sa.Column('profession', sa.Enum('ABOGADO', 'ENFERMERO', 'REFLEXÓLOGA', 'MÉDICO_DE_CABECERA', 'NUTRICIONISTA', 'PSICÓLOGO', 'PSIQUIATRA', 'PODÓLOGO', name='profession'), nullable=False),
     sa.Column('schedule', sa.String(length=100), nullable=True),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dni', sa.String(length=8), nullable=False),
     sa.Column('gender', sa.Enum('M', 'F', name='gender'), nullable=False),
     sa.Column('first_names', sa.String(length=100), nullable=False),
@@ -59,32 +61,33 @@ def upgrade():
     sa.Column('address', sa.String(length=200), nullable=True),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
-    sa.PrimaryKeyConstraint('dni'),
+    sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('dni'),
     sa.UniqueConstraint('license_number')
     )
     op.create_table('activity_enrollments',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('member_dni', sa.String(length=8), nullable=False),
+    sa.Column('member_id', sa.Integer(), nullable=False),
     sa.Column('activity_id', sa.Integer(), nullable=False),
     sa.Column('enrollment_date', sa.Date(), nullable=False),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'CANCELADO', name='activitystatus'), nullable=False),
     sa.ForeignKeyConstraint(['activity_id'], ['activities.id'], ),
-    sa.ForeignKeyConstraint(['member_dni'], ['members.dni'], ),
+    sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('payments',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('member_id', sa.String(length=8), nullable=False),
+    sa.Column('member_id', sa.Integer(), nullable=False),
     sa.Column('amount', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('period', sa.Date(), nullable=False),
     sa.Column('payment_date', sa.Date(), nullable=False),
     sa.Column('status', sa.String(length=20), nullable=False),
-    sa.ForeignKeyConstraint(['member_id'], ['members.dni'], ),
+    sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('teachers',
     sa.Column('activity_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dni', sa.String(length=8), nullable=False),
     sa.Column('gender', sa.Enum('M', 'F', name='gender'), nullable=False),
     sa.Column('first_names', sa.String(length=100), nullable=False),
@@ -96,7 +99,7 @@ def upgrade():
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['activity_id'], ['activities.id'], ),
-    sa.PrimaryKeyConstraint('dni'),
+    sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('dni')
     )
     # ### end Alembic commands ###

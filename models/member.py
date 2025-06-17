@@ -6,6 +6,7 @@ from utils.validators import is_valid_pami_number
 
 # Member (Center affiliate):
 class Member(BasePerson):
+    
     __tablename__ = 'members'
 
     _pami_number = db.Column("pami_number", db.String(14), nullable=True)

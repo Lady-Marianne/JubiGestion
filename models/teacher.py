@@ -2,7 +2,6 @@
 
 from extensions import db
 from models.base_person import BasePerson
-from models.activity import Activity  # Opcional pero recomendable.
 
 # Teacher:
 class Teacher(BasePerson):

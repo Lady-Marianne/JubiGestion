@@ -5,21 +5,9 @@ from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
 from utils.date_utils import parse_dates
-from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 member_bp = Blueprint('member', __name__)
-
-# Convert dates from string to date objects (if they exist):
-
-def convert_dates(data):
-    birth_date_str = data.get('birth_date')
-    birth_date = datetime.strptime(birth_date_str, '%Y-%m-%d').date() if birth_date_str else None
-
-    join_date_str = data.get('join_date')
-    join_date = datetime.strptime(join_date_str, '%Y-%m-%d').date() if join_date_str else None
-
-    return birth_date, join_date
 
 @member_bp.route("/nuevo_socio", methods=["GET", "POST"])
 def add_member():

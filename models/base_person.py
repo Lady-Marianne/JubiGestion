@@ -1,7 +1,6 @@
 # models/base_person.py:
 
 from extensions import db
-from datetime import date
 from sqlalchemy import func, Enum as SQLAlchemyEnum
 from utils.dni_utils import generate_full_dni
 from models.enums import PersonStatus, Gender
@@ -11,7 +10,8 @@ from utils.validators import is_valid_email
 class BasePerson(BaseModel):
     __abstract__ = True  # SQLAlchemy doesn`t convert it into a table.
 
-    dni = db.Column(db.String(8), unique=True, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    dni = db.Column(db.String(8), unique=True, nullable=False)
     gender = db.Column(SQLAlchemyEnum(Gender), nullable=False)  # 'M' for Male, 'F' for Female.
     _dni_number = None  # Temporal, does not store in the DB, but is used to generate the complete DNI.
     first_names = db.Column(db.String(100), nullable=False)

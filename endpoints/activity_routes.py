@@ -3,7 +3,6 @@
 from flask import render_template, Blueprint, request, jsonify
 from models.activity import Activity
 from extensions import db
-from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 from utils.date_utils import parse_dates
 

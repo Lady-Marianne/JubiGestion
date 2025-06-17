@@ -1,7 +1,6 @@
 # models/enums.py:
 
 from models.base_enum import BaseEnum
-from sqlalchemy import Enum as SQLAlchemyEnum
 
 class PersonStatus(BaseEnum):
     ACTIVO = "ACTIVO"

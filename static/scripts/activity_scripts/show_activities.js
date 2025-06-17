@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             const row = document.createElement("tr");
 
             row.innerHTML = `
-                <td>${activity.id}</td>
                 <td>${activity.name}</td>
                 <td>${activity.description}</td>
                 <td>${activity.schedule}</td>
