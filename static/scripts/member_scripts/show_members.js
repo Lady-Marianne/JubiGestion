@@ -34,13 +34,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${member.first_names}</td>
                 <td>${member.last_name}</td>
                 <td>${pamiDisplay}</td>
-                <td>${member.birth_date || ""}</td>
+                <td>${member.birth_date}</td>
                 <td>${member.phone}</td>
                 <td>${member.email}</td>
                 <td>${member.address}</td>
                 <td>${member.status}</td>
-                <td>${member.join_date || ""}</td>
-            `;
+                <td>${member.join_date}</td>
+             <td>
+                    <button class="edit-member-btn" data-id="${member.dni}">Editar</button>
+                </td>`;
 
             tbody.appendChild(row);
         });

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar Actividad{% endblock %}
+
+{% block content %}
+<h2>Editar Actividad</h2>
+<form id="edit-activity-form" method="POST" action="{{ url_for('activity.update_activity', activity_id=activity.id) }}">
+    <label for="name">Nombre:</label>
+    <input type="text" name="name" value="{{ activity.name }}" required><br>
+
+    <label for="description">Descripción:</label>
+    <input type="text" name="description" value="{{ activity.description }}"><br>
+
+    <label for="schedule">Horario:</label>
+    <input type="text" name="schedule" value="{{ activity.schedule }}"><br>
+
+    <label for="start_date">Fecha de inicio:</label>
+    <input type="date" name="start_date" value="{{ activity.start_date }}"><br>
+
+    <label for="end_date">Fecha de fin:</label>
+    <input type="date" name="end_date" value="{{ activity.end_date }}"><br>
+
+    <label for="capacity">Capacidad:</label>
+    <input type="number" name="capacity" value="{{ activity.capacity }}"><br>
+
+    <label for="status">Estado:</label>
+    <select name="status">
+        <option value="ACTIVO" {% if activity.status == 'ACTIVO' %}selected{% endif %}>Activo</option>
+        <option value="INACTIVO" {% if activity.status == 'SUSPENDIDO' %}selected{% endif %}>Suspendido</option>
+        <option value="CANCELADO" {% if activity.status == 'CANCELADO' %}selected{% endif %}>Cancelado</option>
+    </select><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/activity_scripts/edit_activity.js') }}"></script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}

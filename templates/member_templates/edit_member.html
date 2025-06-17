@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar Socio{% endblock %}
+
+{% block content %}
+<h2>Editar Socio</h2>
+<form id="edit-member-form" method="POST" action="{{ url_for('member.update_member', member_dni=member.dni) }}">
+    <label for="first_names">Nombres:</label>
+    <input type="text" name="first_names" value="{{ member.first_names }}" required><br>
+
+    <label for="last_name">Apellidos:</label>
+    <input type="text" name="last_name" value="{{ member.last_name }}" required><br>
+
+    <label for="pami_number">Nro. de Afiliado de PAMI:</label>
+    <input type="text" name="pami_number" value="{{ member.pami_number }}" required><br>
+
+    <label for="birth_date">Fecha de Nacimiento:</label>
+    <input type="date" name="birth_date" value="{{ member.birth_date }}" required><br>
+
+    <label for="phone">Teléfono:</label>
+    <input type="tel" name="phone" value="{{ member.phone }}" required><br>
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" name="email" value="{{ member.email }}" required><br>
+    <label for="address">Dirección:</label>
+    <input type="text" name="address" value="{{ member.address }}" required><br>
+
+    <label for="status">Estado:</label>
+    <select name="status">
+        <option value="ACTIVO" {% if member.status == 'ACTIVO' %}selected{% endif %}>Activo</option>
+        <option value="SUSPENDIDO" {% if member.status == 'SUSPENDIDO' %}selected{% endif %}>Suspendido</option>
+        <option value="ELIMINADO" {% if member.status == 'ELIMINADO' %}selected{% endif %}>Eliminado</option>
+    </select><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/member_scripts/edit_member.js') }}"></script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
