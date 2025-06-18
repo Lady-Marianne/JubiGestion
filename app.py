@@ -16,6 +16,7 @@ from endpoints.member_routes import member_bp
 from endpoints.activity_routes import activity_bp
 
 # Importing models:
+
 from models.activity_enrollment import ActivityEnrollment
 from models.activity import Activity
 from models.base_enum import BaseEnum
@@ -23,6 +24,7 @@ from models.member import Member
 from models.payment import Payment
 from models.professional import Professional
 from models.teacher import Teacher
+
 
 # Configure the Flask app and database:
 

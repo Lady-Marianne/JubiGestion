@@ -4,7 +4,8 @@
 
 {% block content %}
 <h2>Editar Actividad</h2>
-<form id="edit-activity-form" method="POST" action="{{ url_for('activity.update_activity', activity_id=activity.id) }}">
+<form id="edit-activity-form" method="PUT" action="{{ url_for('activity.update_activity', activity_id=activity.id) }}">
+        
     <label for="name">Nombre:</label>
     <input type="text" name="name" value="{{ activity.name }}" required><br>
 

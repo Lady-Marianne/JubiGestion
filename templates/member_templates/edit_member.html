@@ -1,10 +1,18 @@
+<!-- static/templates/member_templates/edit_member.html -->
+
 {% extends "layout.html" %}
 
 {% block title %}Editar Socio{% endblock %}
 
 {% block content %}
 <h2>Editar Socio</h2>
-<form id="edit-member-form" method="POST" action="{{ url_for('member.update_member', member_dni=member.dni) }}">
+<form id="edit-member-form" method="POST" action="{{ url_for('member.update_member', member_id=member.id) }}">
+
+    <!-- Hidden method override for PUT: -->
+    <input type="hidden" name="_method" value="PUT">
+    <label for="dni">DNI:</label>
+    <input type="text" name="dni" value="{{ member.dni }}" required><br>
+
     <label for="first_names">Nombres:</label>
     <input type="text" name="first_names" value="{{ member.first_names }}" required><br>
 
@@ -19,8 +27,10 @@
 
     <label for="phone">Teléfono:</label>
     <input type="tel" name="phone" value="{{ member.phone }}" required><br>
+
     <label for="email">Correo Electrónico:</label>
     <input type="email" name="email" value="{{ member.email }}" required><br>
+
     <label for="address">Dirección:</label>
     <input type="text" name="address" value="{{ member.address }}" required><br>
 
@@ -30,8 +40,10 @@
         <option value="SUSPENDIDO" {% if member.status == 'SUSPENDIDO' %}selected{% endif %}>Suspendido</option>
         <option value="ELIMINADO" {% if member.status == 'ELIMINADO' %}selected{% endif %}>Eliminado</option>
     </select><br>
-
-    <button type="submit">Guardar Cambios</button>
+    <div class="form-actions">
+        <button type="submit" class="btn-save">Guardar Cambios</button>
+        <a href="{{ url_for('member.show_members') }}" class="btn-cancel">Cancelar</a>
+    </div>
 </form>
 {% endblock %}
 {% block scripts %}
@@ -39,4 +51,26 @@
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    .form-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+    .btn-cancel {
+        padding: 8px 16px;
+        background: #f44336;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .btn-save {
+        padding: 8px 16px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    </style>
 {% endblock %}

@@ -17,6 +17,11 @@ def add_member():
 def show_members():
     return render_template("member_templates/show_members.html")
 
+@member_bp.route('/editar_socio/<int:member_id>', methods=['GET'])
+def edit_member_form(member_id):
+    member = Member.query.get_or_404(member_id)
+    return render_template("member_templates/edit_member.html", member=member)
+
 @member_bp.route('/create', methods=['POST'])
 def create_member():
     try:
@@ -72,3 +77,36 @@ def get_all_members():
     except Exception as e:
         print("ERROR AL TRAER SOCIOS:", e)
         return jsonify({"error": str(e)}), 500
+
+@member_bp.route('/update_member/<int:member_id>', methods=['PUT'])
+def update_member(member_id):
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No se recibieron datos"}), 400
+
+        member = Member.query.get(member_id)
+        if not member:
+            return jsonify({"error": "Socio no encontrado"}), 404
+
+        parsed_dates = parse_dates(data, ['birth_date', 'join_date'])
+
+        member.dni = generate_full_dni(data.get('gender'), data.get('dni'))
+        member.gender = data.get('gender', member.gender)
+        member.first_names = data.get('first_names', member.first_names)
+        member.last_name = data.get('last_name', member.last_name)
+        member.birth_date = parsed_dates.get('birth_date', member.birth_date)
+        member.phone = data.get('phone', member.phone)
+        member.email = data.get('email', member.email)
+        member.address = data.get('address', member.address)
+        member.status = data.get('status', member.status)
+        member.join_date = parsed_dates.get('join_date', member.join_date)
+        member.pami_number = data.get('pami_number', member.pami_number)
+
+        db.session.commit()
+
+        return jsonify({"message": "Socio actualizado exitosamente"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400

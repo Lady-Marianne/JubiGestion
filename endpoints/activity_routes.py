@@ -16,6 +16,10 @@ def add_activity():
 def show_activities():
     return render_template("activity_templates/show_activities.html")
 
+@activity_bp.route('/editar_actividad', methods=['PUT'])
+def edit_activity():
+    return render_template("activity_templates/edit_activity.html")
+
 @activity_bp.route('/new', methods=['POST'])
 def create_activity():
     try:
@@ -61,3 +65,33 @@ def get_all_activities():
     except Exception as e:
         print("ERROR AL TRAER ACTIVIDADES:", e)
         return jsonify({"error": str(e)}), 500
+    
+@activity_bp.route('/<int:activity_id>', methods=['PUT'])
+def update_activity(activity_id):
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No se recibieron datos"}), 400
+
+        activity = Activity.query.get(activity_id)
+        if not activity:
+            return jsonify({"error": "Actividad no encontrada"}), 404
+        
+        parsed_dates = parse_dates(data, ['start_date', 'end_date'])
+        
+        # Update activity fields:
+        activity.name = data.get('name', activity.name)
+        activity.description = data.get('description', activity.description)
+        activity.schedule = data.get('schedule', activity.schedule)
+        activity.start_date = parsed_dates.get('start_date', activity.start_date)
+        activity.end_date = parsed_dates.get('end_date', activity.end_date)
+        activity.capacity = data.get('capacity', activity.capacity)
+        activity.status = data.get('status', activity.status)
+
+        db.session.commit()
+
+        return jsonify({"message": "Actividad actualizada exitosamente"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400

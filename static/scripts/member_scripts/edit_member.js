@@ -2,28 +2,30 @@
 
 // This script handles the editing of members in the member list.
 // It listens for clicks on the edit button, fetches the member data.
-
+/*
 document.addEventListener('DOMContentLoaded', () => {
     const memberList = document.getElementById('member-list');
+    if (!memberList) return; // If we are not on the member list page, exit.
 
     memberList.addEventListener('click', async (event) => {
         if (event.target.classList.contains('edit-member-btn')) {
             const row = event.target.closest('tr');
-            const memberId = row.dataset.id;
-
+            const memberId = event.target.dataset.id;
             try {
                 const res = await fetch(`/api/members/${memberId}`);
+                if (!res.ok) throw new Error("No se pudo obtener el socio");
                 const member = await res.json();
 
                 // Show an emergent form with the loaded data:
-                showEditForm(member);
+                showEditForm(member, memberId);
             } catch (error) {
                 console.error("Error al obtener los datos del socio:", error);
+                alert("Error al obtener los datos del socio: " + error.message);
             }
         }
     });
 
-    function showEditForm(member) {
+    function showEditForm(member, memberId) {
         const formHtml = `
             <form id="edit-member-form">
                 <input type="hidden" name="dni" value="${member.dni}">
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </label><br>
                 <label>Fecha de Ingreso: <input type="date" name="join_date" value="${member.join_date}"></label><br>
                 <button type="submit">Guardar cambios</button>
+                <button type="button" id="cancel-btn">Cancelar</button>
             </form>
         `;
 
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = Object.fromEntries(formData.entries());
 
             try {
-                const res = await fetch(`/api/members/${data.id}`, {
+                const res = await fetch(`/api/members/${memberId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -70,7 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error("Error al enviar PUT:", error);
+                alert("Error al actualizar el socio");
             }
+        });
+        // Cancel button:
+        modal.querySelector('#cancel-btn').addEventListener('click', () => {
+            modal.remove();
         });
     }
 });
+*/
