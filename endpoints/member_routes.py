@@ -50,9 +50,11 @@ def create_member():
 
         return jsonify({
             "message": "Socio creado exitosamente",
-            "member": new_member.dni
+            "member_id": new_member.id,
+            "dni": new_member.dni
         }), 201
-
+    
+    # Handle IntegrityError for unique constraints (like DNI):
     except IntegrityError:
         db.session.rollback()
         return jsonify({"error": "El nro. de DNI ya existe"}), 400

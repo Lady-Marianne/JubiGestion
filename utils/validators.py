@@ -26,3 +26,4 @@ def is_valid_pami_number(pami_number, member_model=None):
     pami_number = str(pami_number).strip()
     if len(pami_number) != 14 or not pami_number.isdigit():
         return False, "El número de PAMI debe tener exactamente 14 dígitos."
+    return True, None
