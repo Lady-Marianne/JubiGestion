@@ -1,6 +1,7 @@
 # endpoints/member_routes.py:
 
 from flask import render_template, Blueprint, request, jsonify
+from models import member
 from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
@@ -78,7 +79,7 @@ def get_all_members():
         print("ERROR AL TRAER SOCIOS:", e)
         return jsonify({"error": str(e)}), 500
 
-@member_bp.route('/update_member/<int:member_id>', methods=['PUT'])
+@member_bp.route('/update_member/<int:member_id>', methods=['POST', 'PUT'])
 def update_member(member_id):
     try:
         data = request.get_json()
@@ -105,8 +106,14 @@ def update_member(member_id):
 
         db.session.commit()
 
-        return jsonify({"message": "Socio actualizado exitosamente"}), 200
-
+        return jsonify({"message": "Socio actualizado exitosamente"}), 200         
+        
+    # Handle IntegrityError for unique constraints (like DNI):
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "El nro. de DNI ya existe"}), 400
+  
+    # Handle other exceptions:
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400

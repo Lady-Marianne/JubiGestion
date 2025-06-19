@@ -10,6 +10,13 @@
 
     <!-- Hidden method override for PUT: -->
     <input type="hidden" name="_method" value="PUT">
+
+    <label for="gender">Sexo:</label>
+    <select name="gender" required>
+        <option value="M" {% if member.gender == 'M' %}selected{% endif %}>Masculino</option>
+        <option value="F" {% if member.gender == 'F' %}selected{% endif %}>Femenino</option>
+    </select><br>
+
     <label for="dni">DNI:</label>
     <input type="text" name="dni" value="{{ member.dni }}" required><br>
 
