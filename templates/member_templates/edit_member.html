@@ -6,10 +6,12 @@
 
 {% block content %}
 <h2>Editar Socio</h2>
+<!--
 <form id="edit-member-form" method="POST" action="{{ url_for('member.update_member', member_id=member.id) }}">
-
-    <!-- Hidden method override for PUT: -->
-    <input type="hidden" name="_method" value="PUT">
+-->
+<form id="edit-member-form" data-member-id="{{ member.id }}">
+    <!-- Hidden method override for PUT:
+    <input type="hidden" name="_method" value="PUT"> -->
 
     <label for="gender">Sexo:</label>
     <select name="gender" required>

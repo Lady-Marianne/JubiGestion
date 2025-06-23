@@ -92,7 +92,7 @@ def update_member(member_id):
 
         parsed_dates = parse_dates(data, ['birth_date', 'join_date'])
 
-        member.dni = generate_full_dni(data.get('gender'), data.get('dni'))
+        member.dni = generate_full_dni(data.get('gender'), data.get('dni'), current_person_id=member.id)
         member.gender = data.get('gender', member.gender)
         member.first_names = data.get('first_names', member.first_names)
         member.last_name = data.get('last_name', member.last_name)
