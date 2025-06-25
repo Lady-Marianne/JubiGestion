@@ -7,6 +7,9 @@ from extensions import db
 from utils.dni_utils import generate_full_dni
 from utils.date_utils import parse_dates
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import inspect
+
+
 
 member_bp = Blueprint('member', __name__)
 
@@ -92,8 +95,12 @@ def update_member(member_id):
 
         parsed_dates = parse_dates(data, ['birth_date', 'join_date'])
 
-        member.dni = generate_full_dni(data.get('gender'), data.get('dni'), current_person_id=member.id)
-        member.gender = data.get('gender', member.gender)
+        new_dni = generate_full_dni(data.get('gender'), data.get('dni'))
+        print("member.dni:", member.dni, type(member.dni))
+        print("new_dni:", new_dni, type(new_dni))
+        # Check if the new DNI is different from the current one:
+        if new_dni != member.dni:
+            member.dni = new_dni
         member.first_names = data.get('first_names', member.first_names)
         member.last_name = data.get('last_name', member.last_name)
         member.birth_date = parsed_dates.get('birth_date', member.birth_date)
@@ -111,8 +118,8 @@ def update_member(member_id):
     # Handle IntegrityError for unique constraints (like DNI):
     except IntegrityError:
         db.session.rollback()
-        return jsonify({"error": "El nro. de DNI ya existe"}), 400
-  
+        return jsonify({"error": "Ya hay otro socio con ese DNI."}), 400  
+    
     # Handle other exceptions:
     except Exception as e:
         db.session.rollback()

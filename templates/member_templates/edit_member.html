@@ -29,7 +29,7 @@
     <input type="text" name="last_name" value="{{ member.last_name }}" required><br>
 
     <label for="pami_number">Nro. de Afiliado de PAMI:</label>
-    <input type="text" name="pami_number" value="{{ member.pami_number }}" required><br>
+    <input type="text" name="pami_number" value="{{ member.pami_number }}"><br>
 
     <label for="birth_date">Fecha de Nacimiento:</label>
     <input type="date" name="birth_date" value="{{ member.birth_date }}" required><br>
@@ -49,6 +49,10 @@
         <option value="SUSPENDIDO" {% if member.status == 'SUSPENDIDO' %}selected{% endif %}>Suspendido</option>
         <option value="ELIMINADO" {% if member.status == 'ELIMINADO' %}selected{% endif %}>Eliminado</option>
     </select><br>
+
+    <label for="join_date">Fecha de Ingreso:</label>
+    <input type="date" name="join_date" value="{{ member.join_date }}" required><br>
+
     <div class="form-actions">
         <button type="submit" class="btn-save">Guardar Cambios</button>
         <a href="{{ url_for('member.show_members') }}" class="btn-cancel">Cancelar</a>
