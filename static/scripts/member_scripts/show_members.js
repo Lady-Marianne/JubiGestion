@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${joinDate}</td>
              <td>
                     <button class="edit-member-btn" data-id="${member.id}">Editar</button>
-                </td>`;
+                    <button class="delete-member-btn" data-id="${member.id}">Eliminar</button>
+            </td>`;
 
             tbody.appendChild(row);
         });
@@ -86,11 +87,4 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
     }
 });
-/*
-document.addEventListener("click", function (event) {
-    if (event.target.classList.contains("edit-member-btn")) {
-        const memberId = event.target.dataset.id;
-        window.location.href = `/api/members/editar_socio/${memberId}`;
-    }
-});*/
 
