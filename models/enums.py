@@ -23,6 +23,7 @@ class Gender(BaseEnum):
 
     def __str__(self):
         return "Masculino" if self == Gender.M else "Femenino"
+    
 class Profession(BaseEnum):
     ABOGADO = "ABOGADO"
     ENFERMERO = "ENFERMERO"

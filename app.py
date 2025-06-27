@@ -12,6 +12,7 @@ from database_setup import create_database
 
 # Importing the blueprint for member routes:
 
+from endpoints.person_routes import person_bp
 from endpoints.member_routes import member_bp
 from endpoints.activity_routes import activity_bp
 
@@ -41,6 +42,7 @@ create_database(app)  # Create the database if it doesn't exist.
 def index():
     return render_template('index.html')
 
+app.register_blueprint(person_bp, url_prefix='/api/persons')
 app.register_blueprint(member_bp, url_prefix='/api/members')
 app.register_blueprint(activity_bp, url_prefix='/api/activities')
 

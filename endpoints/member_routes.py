@@ -1,15 +1,11 @@
 # endpoints/member_routes.py:
 
 from flask import render_template, Blueprint, request, jsonify
-from models import member
 from models.member import Member
 from extensions import db
 from utils.dni_utils import generate_full_dni
 from utils.date_utils import parse_dates
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import inspect
-
-
 
 member_bp = Blueprint('member', __name__)
 
@@ -75,8 +71,10 @@ def create_member():
 @member_bp.route('/all', methods=['GET'])
 def get_all_members():
     try:
-        members = Member.query.order_by(Member.last_name.asc()).all()
-        members_data = jsonify([m.to_dict() for m in members])       
+        members = Member.query.order_by(Member.last_name.asc()) \
+            .filter(Member.status != 'ELIMINADO') \
+            .all()
+        members_data = jsonify([m.to_dict() for m in members])
         return members_data, 200
     except Exception as e:
         print("ERROR AL TRAER SOCIOS:", e)

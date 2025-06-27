@@ -20,7 +20,9 @@
     </select><br>
 
     <label for="dni">DNI:</label>
-    <input type="text" name="dni" value="{{ member.dni }}" required><br>
+    <!--<input type="text" name="dni" value="{{ member.dni }}" required><br>-->
+    <!-- If the DNI starts with a letter, remove it for input, but keep it in the value: -->
+    <input type="text" name="dni" value="{{ member.dni[1:] if member.dni|length == 8 and not member.dni[0].isdigit() else member.dni }}">
 
     <label for="first_names">Nombres:</label>
     <input type="text" name="first_names" value="{{ member.first_names }}" required><br>

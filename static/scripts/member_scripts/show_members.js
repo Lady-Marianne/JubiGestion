@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const response = await fetch("/api/members/all");
         if (!response.ok) {
             console.error("Error en la respuesta HTTP:", response.status);
-            alert("No se pudieron obtener los datos de los socios.");
+            showMessage("Error al obtener los datos de los socios.", false);
             return;
         }
         const members = await response.json();
@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (!response.ok) {
             console.error("Error en la respuesta HTTP:", response.status);
-            alert("No se pudieron obtener los datos de los socios.");
+            showMessage("Error al obtener los datos de los socios.", false);
             return;
         }
 
         if (!Array.isArray(members)) {
             console.error("Respuesta inesperada: no es un array", members);
-            alert("Error: los datos recibidos no son válidos.");
+            showMessage("Error: los datos recibidos no son válidos.", false);
             return;
         }
 
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${joinDate}</td>
              <td>
                     <button class="edit-member-btn" data-id="${member.id}">Editar</button>
-                    <button class="delete-member-btn" data-id="${member.id}">Eliminar</button>
+                    <button class="delete-person-btn" data-id="${member.id}" data-kind="member">Eliminar</button>
             </td>`;
 
             tbody.appendChild(row);
@@ -71,6 +71,36 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
         });
 
+        // Handle events for Delete buttons:
+        document.addEventListener('click', async (event) => {
+            if (event.target.classList.contains('delete-person-btn')) {
+                const memberId = event.target.dataset.id;        
+                if (!confirm("¿Estás segura/o de que querés eliminar este socio?")) return;
+                try {
+                    const response = await fetch(`/api/persons/delete_person/member/${memberId}`, {
+                        method: 'PATCH'
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        window.location.href = "/api/members/ver_socios";
+                        // Show success message:
+                        showMessage("Socio eliminado correctamente", true);
+                        setTimeout(() => {
+                            window.location.href = "/api/members/ver_socios";
+                        }, 3000); // Wait 3 seconds before reloading/redirecting.
+
+                    }
+                    else {
+                        showMessage("Error: " + (result.error || "No se pudo eliminar."), false);
+                    }
+                } catch (error) {
+                    console.error("Error en la eliminación:", error);
+                    showMessage("Error: " + (error.message || "Error de red o del servidor."), false);
+                }
+            }
+        });
+
+
     } catch (error) {
         // alert("Error al obtener los datos de los socios: " + error.message);
                 console.error("Error al cargar socios:", error);
@@ -87,4 +117,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
     }
 });
-
