@@ -13,10 +13,6 @@ member_bp = Blueprint('member', __name__)
 def add_member():
     return render_template("member_templates/add_member.html")
 
-@member_bp.route("/ver_socios", methods=["GET"])
-def show_members():
-    return render_template("member_templates/show_members.html")
-
 @member_bp.route('/editar_socio/<int:member_id>', methods=['GET'])
 def edit_member_form(member_id):
     member = Member.query.get_or_404(member_id)
@@ -68,18 +64,6 @@ def create_member():
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
     
-@member_bp.route('/all', methods=['GET'])
-def get_all_members():
-    try:
-        members = Member.query.order_by(Member.last_name.asc()) \
-            .filter(Member.status != 'ELIMINADO') \
-            .all()
-        members_data = jsonify([m.to_dict() for m in members])
-        return members_data, 200
-    except Exception as e:
-        print("ERROR AL TRAER SOCIOS:", e)
-        return jsonify({"error": str(e)}), 500
-
 @member_bp.route('/update_member/<int:member_id>', methods=['POST', 'PUT'])
 def update_member(member_id):
     try:

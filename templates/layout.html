@@ -20,7 +20,9 @@
         <nav>
             <a href="{{ url_for('index') }}">Inicio</a><br>
             <a href="{{ url_for('member.add_member') }}">Agregar nuevo socio</a><br>
-            <a href="{{ url_for('member.show_members') }}">Ver socios</a><br>
+            <a href="{{ url_for('member.show_members') }}">Ver socios activos</a><br>
+            <a href="{{ url_for('member.show_members') }}">Ver socios suspendidos</a><br>
+            <a href="{{ url_for('member.show_members') }}">Ver socios eliminados</a><br>
             <a href="{{ url_for('activity.add_activity') }}">Agregar nueva actividad o taller</a><br>
             <a href="{{ url_for('activity.show_activities') }}">Ver actividades y talleres</a><br>
         </nav>

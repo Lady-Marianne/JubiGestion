@@ -6,8 +6,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const membersTable = document.querySelector("#membersTable");
     if (!membersTable) return; // If we are not on the members list page, exit.
 
+    const kind = "member";
+    const status = "ACTIVO"; // Default status to show active members.
+
     try {
-        const response = await fetch("/api/members/all");
+        const response = await fetch(`/api/persons/all/${kind}?status=${status}`);
         if (!response.ok) {
             console.error("Error en la respuesta HTTP:", response.status);
             showMessage("Error al obtener los datos de los socios.", false);
