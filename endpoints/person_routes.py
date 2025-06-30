@@ -16,9 +16,14 @@ MODEL_MAP = {
     "teacher": Teacher
 }
 
-@person_bp.route("/ver_personas", methods=["GET"])
-def show_persons():
-    return render_template("person_templates/show_persons.html")
+@person_bp.route("/ver_personas/<kind>", methods=["GET"])
+def show_persons(kind):
+    if kind not in MODEL_MAP:
+        return f"Tipo de persona desconocido: {kind}", 400
+    try:
+        return render_template(f"{kind}_templates/show_{kind}s.html")
+    except Exception as e:
+        return jsonify({"error": f"No se pudo renderizar la plantilla para {kind}: {str(e)}"}), 500
 
 @person_bp.route('/all/<kind>', methods=['GET'])
 def get_all_persons(kind):

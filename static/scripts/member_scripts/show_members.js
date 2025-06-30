@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (!membersTable) return; // If we are not on the members list page, exit.
 
     const kind = "member";
-    const status = "ACTIVO"; // Default status to show active members.
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get("status") || "ACTIVO";  // Default to "ACTIVO" if no status is provided.
     try {
         const response = await fetch(`/api/persons/all/${kind}?status=${status}`);
         if (!response.ok) {

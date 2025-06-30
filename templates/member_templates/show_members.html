@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Socios:</h1>
     <div id="message-box" class=""></div>
-    <form method="GET" action="{{ url_for('member.get_all_members') }}">
+    <form method="GET" action="{{ url_for('person.get_all_persons', kind='member') }}">
         <table id="membersTable">
             <thead>
                 <tr>

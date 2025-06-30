@@ -21,6 +21,7 @@ from endpoints.activity_routes import activity_bp
 from models.activity_enrollment import ActivityEnrollment
 from models.activity import Activity
 from models.base_enum import BaseEnum
+from models.base_person import BasePerson
 from models.member import Member
 from models.payment import Payment
 from models.professional import Professional
