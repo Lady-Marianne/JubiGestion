@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert(result.message || "¡Cambios guardados!");
-            const redirectUrl = `/api/members/ver_personas/member?status=${currentStatus}`;
+            const redirectUrl = `/api/persons/ver_personas/member?status=${currentStatus}`;
             console.log("Redirigiendo a:", redirectUrl);
             window.location.href = redirectUrl;
             
