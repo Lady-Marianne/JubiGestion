@@ -57,7 +57,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn-save">Guardar Cambios</button>
-        <a href="{{ url_for('member.show_members') }}" class="btn-cancel">Cancelar</a>
+        <a href="{{ url_for('person.show_persons', kind='member', status=member.status) }}" class="btn-cancel">Cancelar</a>
     </div>
 </form>
 {% endblock %}

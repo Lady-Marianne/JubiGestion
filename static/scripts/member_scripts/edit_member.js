@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('edit-member-form');
-    
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentStatus = urlParams.get('status') || 'ACTIVO';
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const memberId = form.dataset.memberId;
         const formData = new FormData(form);
         
-        // Mostrar loader (opcional)
+        // Show loader (optional):
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Guardando...';
@@ -35,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert(result.message || "¡Cambios guardados!");
-            window.location.href = "/api/members/ver_socios";
+            const redirectUrl = `/api/members/ver_personas/member?status=${currentStatus}`;
+            console.log("Redirigiendo a:", redirectUrl);
+            window.location.href = redirectUrl;
             
         } catch (error) {
             console.error("Error:", error);

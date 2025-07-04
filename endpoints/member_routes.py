@@ -16,7 +16,7 @@ def add_member():
 @member_bp.route('/editar_socio/<int:member_id>', methods=['GET'])
 def edit_member_form(member_id):
     member = Member.query.get_or_404(member_id)
-    return render_template("member_templates/edit_member.html", member=member)
+    return render_template("member_templates/edit_member.html", member=member, status=member.status)
 
 @member_bp.route('/create', methods=['POST'])
 def create_member():
