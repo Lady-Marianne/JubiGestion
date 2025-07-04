@@ -50,3 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cancelButton = document.getElementById("cancel-button");
+    if (cancelButton) {
+        const url = cancelButton.getAttribute("data-url");
+        cancelButton.addEventListener("click", function () {
+            window.location.href = url;
+        });
+    }
+});

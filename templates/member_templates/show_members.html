@@ -3,9 +3,8 @@
 {% block title %}Socios{% endblock %}
 
 {% block content %}
-    <h1>Socios:</h1>
+    <h1 id="members-title">Socios:</h1>
     <div id="message-box" class=""></div>
-    <form method="GET" action="{{ url_for('person.get_all_persons', kind='member') }}">
         <table id="membersTable">
             <thead>
                 <tr>
@@ -13,12 +12,9 @@
                     <th>Apellido</th>
                     <th>Nombres</th>
                     <th>Nro. PAMI</th>
-                    <th>Fecha de nacimiento</th>
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th>Dirección</th>
-                    <th>Status</th>
-                    <th>Fecha de alta</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -30,6 +26,7 @@
 
 {% endblock %}
  {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/utils/messages.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/member_scripts/show_members.js') }}"></script>
 {% endblock %}
 {% block styles %}

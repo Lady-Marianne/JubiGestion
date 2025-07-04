@@ -1,43 +1,226 @@
-/* static/styles.css */
+/* --- GLOBAL RESET & BASE STYLES --- */
+* {
+    box-sizing: border-box;
+}
 
 body {
-    font-family: sans-serif;
-    font-size: 18px;
-    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    background-color: #f0f2f5;
     color: #222;
+}
+
+/* --- PAGE LAYOUT: Sidebar + Main Content --- */
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR MENU --- */
+.sidebar {
+    width: 220px;
+    background-color: #cce3dc;
     padding: 20px;
 }
 
-header, footer {
-    background-color: #ddd;
-    padding: 10px;
+.sidebar h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-main {
-    margin: 20px auto;
-    max-width: 800px;
+.sidebar nav a {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #b2d8cf;
+    color: #222;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
 }
 
+.sidebar nav a:hover {
+    background-color: #98c9be;
+}
+
+/* --- MAIN CONTENT AREA --- */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    flex: 1;
+}
+
+/* --- HEADER & FOOTER --- */
+header, footer {
+    background-color: #cce3dc;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+footer {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    font-size: 14px;
+    color: #666;
+}
+
+/* --- HEADINGS --- */
 h1 {
-    font-size: 28px;
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #2e4053;
 }
 
 h2 {
     font-size: 24px;
+    margin-bottom: 15px;
+    color: #34495e;
 }
 
-button {
-    font-size: 18px;
-    padding: 10px;
-    margin: 10px 0;
+.welcome-message {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #555;
+}
+
+/* --- TABLES --- */
+table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    table-layout: auto;
+    word-wrap: break-word;
 }
 
-#message-box {
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* --- ICON BUTTONS (Edit & Delete) --- */
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 18px;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.icon-btn:hover {
+    color: #007bff;
+}
+
+.icon-btn .fa-pen {
+    color: #28a745;
+}
+
+.icon-btn .fa-trash-alt {
+    color: #dc3545;
+}
+
+.icon-btn:hover .fa-pen {
+    color: #1e7e34;
+}
+
+.icon-btn:hover .fa-trash-alt {
+    color: #c82333;
+}
+
+.icon-btn i {
+    transition: transform 0.2s ease;
+}
+
+.icon-btn:hover i {
+    transform: scale(1.2);
+}
+
+/* --- GENERIC BUTTONS (optional, if you still use them elsewhere) --- */
+button, .btn {
+    font-size: 18px;
     padding: 10px 20px;
-    margin: 15px auto;
-    width: fit-content;
+    margin: 10px 0;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #357ab8;
+}
+
+/* --- FORM STYLES --- */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- FORM ACTION BUTTONS (SAVE & CANCEL) --- */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.btn-save {
+    background-color: #4CAF50;
+}
+
+.btn-save:hover {
+    background-color: #388e3c;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+}
+
+/* --- MESSAGE BOX --- */
+#message-box {
+    padding: 12px 20px;
+    margin: 20px auto;
     max-width: 600px;
     border-radius: 8px;
     font-weight: bold;
@@ -58,3 +241,33 @@ button {
     border: 1px solid #f5c6cb;
 }
 
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .layout-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+
+    main {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}

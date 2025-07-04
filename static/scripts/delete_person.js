@@ -14,9 +14,13 @@ document.addEventListener('click', async (event) => {
             const result = await response.json();
 
             if (response.ok) {
-                showMessage("¿Está seguro/a de que quiere eliminar este " + kind + "?", true);
+                // Show success message after deletion
+                showMessage(`${kind.charAt(0).toUpperCase() + kind.slice(1)} eliminado correctamente.`, true);
 
-                location.reload();
+                // Wait for the message to show, then reload the page:
+                setTimeout(() => {
+                    location.reload();
+                }, 1500); // Wait 1.5 seconds before reloading the page.
             } else {
                 showMessage("Error: " + (result.error || "No se pudo eliminar."), false);
             }

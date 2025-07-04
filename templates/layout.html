@@ -1,6 +1,6 @@
 <!-- 
     templates/layout.html
-    "Base template using Jinja2. Other pages will inherit from this one."
+    Base template using Jinja2. Every view inherits from here.
 -->
 
 <!DOCTYPE html>
@@ -9,34 +9,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>{% block title %}JubiGestión{% endblock %}</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>JubiGestión</h1>
-        <nav>
-            <a href="{{ url_for('index') }}">Inicio</a><br>
-            <a href="{{ url_for('member.add_member') }}">Agregar nuevo socio</a><br>
-            <a href="{{ url_for('person.show_persons', kind='member') }}?status=ACTIVO">Ver socios activos</a><br>
-            <a href="{{ url_for('person.show_persons', kind='member') }}?status=SUSPENDIDO">Ver socios suspendidos</a><br>
-            <a href="{{ url_for('person.show_persons', kind='member') }}?status=ELIMINADO">Ver socios eliminados</a><br>
-            <a href="{{ url_for('activity.add_activity') }}">Agregar nueva actividad o taller</a><br>
-            <a href="{{ url_for('activity.show_activities') }}">Ver actividades y talleres</a><br>
-        </nav>
-    </header>
+    <div class="layout-container">
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <!-- Left sidebar -->
+        <aside class="sidebar">
+            <h1>MENÚ</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Inicio</a>
+                <a href="{{ url_for('member.add_member') }}">Agregar nuevo socio</a>
+                <a href="{{ url_for('person.show_persons', kind='member') }}?status=ACTIVO">Ver socios activos</a>
+                <a href="{{ url_for('person.show_persons', kind='member') }}?status=SUSPENDIDO">Ver socios suspendidos</a>
+                <a href="{{ url_for('person.show_persons', kind='member') }}?status=ELIMINADO">Ver socios eliminados</a>
+                <a href="{{ url_for('activity.add_activity') }}">Agregar nueva actividad o taller</a>
+                <a href="{{ url_for('activity.show_activities') }}">Ver actividades y talleres</a>
+            </nav>
+        </aside>
 
-    <footer>
-        <p>Centro de Jubilados · Sistema en desarrollo</p>
-    </footer>
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <h1>JubiGestión</h1>
+            </header>
 
-    <!-- Block for specific scripts for each view -->
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+
+            <footer>
+                <p>Centro de Jubilados · Sistema en desarrollo</p>
+            </footer>
+        </div>
+
+    </div>
+
     {% block scripts %}{% endblock %}
 </body>
 </html>

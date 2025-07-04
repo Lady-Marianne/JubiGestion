@@ -6,22 +6,17 @@
 
 {% block content %}
 <h2>Editar Socio</h2>
-<!--
-<form id="edit-member-form" method="POST" action="{{ url_for('member.update_member', member_id=member.id) }}">
--->
+
 <form id="edit-member-form" data-member-id="{{ member.id }}">
-    <!-- Hidden method override for PUT:
-    <input type="hidden" name="_method" value="PUT"> -->
 
     <label for="gender">Sexo:</label>
+
     <select name="gender" required>
         <option value="M" {% if member.gender == 'M' %}selected{% endif %}>Masculino</option>
         <option value="F" {% if member.gender == 'F' %}selected{% endif %}>Femenino</option>
     </select><br>
 
     <label for="dni">DNI:</label>
-    <!--<input type="text" name="dni" value="{{ member.dni }}" required><br>-->
-    <!-- If the DNI starts with a letter, remove it for input, but keep it in the value: -->
     <input type="text" name="dni" value="{{ member.dni[1:] if member.dni|length == 8 and not member.dni[0].isdigit() else member.dni }}">
 
     <label for="first_names">Nombres:</label>
@@ -56,8 +51,11 @@
     <input type="date" name="join_date" value="{{ member.join_date }}" required><br>
 
     <div class="form-actions">
-        <button type="submit" class="btn-save">Guardar Cambios</button>
-        <a href="{{ url_for('person.show_persons', kind='member', status=member.status) }}" class="btn-cancel">Cancelar</a>
+        <button type="submit" class="btn-save">Guardar</button>
+        <button id="cancel-button" type="button" class="btn-cancel"
+            data-url="{{ url_for('person.show_persons', kind='member', status=member.status) }}">
+            Cancelar
+        </button>
     </div>
 </form>
 {% endblock %}
@@ -66,26 +64,4 @@
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
-    .form-actions {
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-    }
-    .btn-cancel {
-        padding: 8px 16px;
-        background: #f44336;
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-    }
-    .btn-save {
-        padding: 8px 16px;
-        background: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    </style>
 {% endblock %}

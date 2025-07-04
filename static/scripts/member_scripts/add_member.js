@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                messageBox.style.color = "green";
                 messageBox.textContent = "Socio creado exitosamente: " + result.dni;
                 form.reset();
             } else {
