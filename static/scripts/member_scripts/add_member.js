@@ -2,14 +2,14 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("add-member-form");
-    const messageBox = document.getElementById("message-box");
+    // const messageBox = document.getElementById("message-box");
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevent traditional submission.
 
         // Clear previous messages:
-        messageBox.textContent = "";
-        messageBox.style.color = "red";
+        // messageBox.textContent = "";
+        showMessage("", true); // Clear message box.
 
         // Get form data:
         const formData = new FormData(form);
@@ -45,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                messageBox.textContent = "Socio creado exitosamente: " + result.dni;
+                showMessage("Socio creado exitosamente: " + result.dni);
                 form.reset();
             } else {
-                messageBox.textContent = "Error: " + result.error;
+                showMessage("Error: " + result.error, false);
             }
         } catch (error) {
-            messageBox.textContent = "Error de conexión: " + error.message;
+            showMessage("Error de conexión: " + error.message, false);
         }
     });
 });

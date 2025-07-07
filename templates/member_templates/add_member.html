@@ -7,16 +7,17 @@
 {% block content %}
 <h1>Agregar nuevo socio:</h1>
 
-<!-- Container for error or success messages-->
-<div id="message-box"></div>
-
 <form id="add-member-form">
     <label for="dni">DNI:</label>
     <input type="text" name="dni" id="dni" required><br>
 
-    <p><strong>Sexo:</strong></p>
-    <label><input type="radio" name="gender" value="M"> Masculino</label>
-    <label><input type="radio" name="gender" value="F"> Femenino</label><br>
+    <div class="form-row">
+    <label for="gender" class="label-inline"><strong>Sexo:</strong></label>
+    <div class="radio-group">
+        <label><input type="radio" name="gender" value="M"> Masculino</label>
+        <label><input type="radio" name="gender" value="F"> Femenino</label>
+    </div>
+    </div>
 
     <label for="first_names">Nombres:</label>
     <input type="text" name="first_names" id="first_names" required><br>
@@ -44,9 +45,13 @@
 
     <button type="submit">Guardar</button>
 </form>
+
+<!-- Container for error or success messages-->
+<div id="message-box"></div>
 {% endblock %}
 
 {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/utils/messages.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/member_scripts/add_member.js') }}"></script>
 {% endblock %}
 

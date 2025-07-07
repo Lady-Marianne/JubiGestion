@@ -10,7 +10,6 @@
 <form id="edit-member-form" data-member-id="{{ member.id }}">
 
     <label for="gender">Sexo:</label>
-
     <select name="gender" required>
         <option value="M" {% if member.gender == 'M' %}selected{% endif %}>Masculino</option>
         <option value="F" {% if member.gender == 'F' %}selected{% endif %}>Femenino</option>

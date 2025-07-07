@@ -1,4 +1,4 @@
-This batch file is used to run the JubiGestion application.
+REM This batch file is used to run the JubiGestion application.
 REM It activates the virtual environment and starts the application.
 
 @echo off

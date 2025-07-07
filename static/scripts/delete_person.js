@@ -14,7 +14,7 @@ document.addEventListener('click', async (event) => {
             const result = await response.json();
 
             if (response.ok) {
-                // Show success message after deletion
+                // Show success message after deletion:
                 showMessage(`${kind.charAt(0).toUpperCase() + kind.slice(1)} eliminado correctamente.`, true);
 
                 // Wait for the message to show, then reload the page:

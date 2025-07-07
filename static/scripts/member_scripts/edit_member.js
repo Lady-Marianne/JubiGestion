@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(Object.fromEntries(formData))
             });
 
-            // Verificar si la respuesta es JSON
+            // Verificar si la respuesta es JSON:
             const contentType = response.headers.get('content-type');
             if (!contentType || !contentType.includes('application/json')) {
                 const text = await response.text();
