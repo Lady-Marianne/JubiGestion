@@ -49,6 +49,9 @@
     <label for="join_date">Fecha de Ingreso:</label>
     <input type="date" name="join_date" value="{{ member.join_date }}" required><br>
 
+    <!-- Container for error or success messages-->
+    <div id="message-box"></div>
+    
     <div class="form-actions">
         <button type="submit" class="btn-save">Guardar</button>
         <button id="cancel-button" type="button" class="btn-cancel"
@@ -57,8 +60,10 @@
         </button>
     </div>
 </form>
+
 {% endblock %}
 {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/utils/messages.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/member_scripts/edit_member.js') }}"></script>
 {% endblock %}
 {% block styles %}

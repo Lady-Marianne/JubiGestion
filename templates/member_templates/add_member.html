@@ -43,11 +43,13 @@
     <label for="join_date">Fecha de ingreso:</label>
     <input type="date" name="join_date" id="join_date" required><br>
 
+    <!-- Container for error or success messages:-->
+    <div id="message-box"></div>
+
     <button type="submit">Guardar</button>
 </form>
 
-<!-- Container for error or success messages-->
-<div id="message-box"></div>
+
 {% endblock %}
 
 {% block scripts %}

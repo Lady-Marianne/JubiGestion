@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             tbody.appendChild(row);
         });
 
-        // Botones de editar
+        // Edit buttons:
         document.querySelectorAll(".edit-member-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -80,16 +80,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-// ✅ Escuchar el botón de eliminar de forma global y reutilizable
+// ✅ Listen for the delete button globally and reuse:
 document.addEventListener("click", async function (event) {
-    const button = event.target;
-    if (!button.classList.contains("delete-person-btn")) return;
+    const button = event.target.closest(".delete-person-btn");
+    if (!button) return;
 
     const personId = button.dataset.id;
     const kind = button.dataset.kind;
 
-    if (!confirm("¿Estás segura/o de que querés eliminar este socio?")) return;
-
+   // if (!confirm("¿Estás segura/o de que querés eliminar este socio?")) return;
+    showConfirmation("¿Estás segura/o de que querés eliminar este socio?", async () => {
+    // Proceed with deletion:
     try {
         const response = await fetch(`/api/persons/delete_person/${kind}/${personId}`, {
             method: 'PATCH'
@@ -100,14 +101,15 @@ document.addEventListener("click", async function (event) {
         if (response.ok) {
             showMessage("Socio eliminado correctamente", true);
             setTimeout(() => {
-                window.location.reload();  // Actualizamos la vista actual
-            }, 1500);
+                window.location.reload();  // Refresh the current view.
+            }, 4000);
         } else {
             showMessage("Error: " + (result.error || "No se pudo eliminar."), false);
         }
 
-    } catch (error) {
-        console.error("Error en la eliminación:", error);
-        showMessage("Error: " + (error.message || "Error de red o del servidor."), false);
-    }
+        } catch (error) {
+            console.error("Error en la eliminación:", error);
+            showMessage("Error: " + (error.message || "Error de red o del servidor."), false);
+        }
+    });
 });

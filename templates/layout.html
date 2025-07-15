@@ -45,9 +45,20 @@
                 <p>Centro de Jubilados · Sistema en desarrollo</p>
             </footer>
         </div>
-
     </div>
 
+    <!-- Confirm modal global -->
+    <div id="confirm-modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="confirm-message"></p>
+            <div class="modal-buttons">
+                <button id="confirm-yes">Sí</button>
+                <button id="confirm-no">No</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
     {% block scripts %}{% endblock %}
 </body>
 </html>

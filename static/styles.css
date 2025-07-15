@@ -270,3 +270,48 @@ label {
   margin-right: 6px;
   transform: translateY(1px);
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5em;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 0.5em 1em;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#confirm-yes {
+  background-color: #d9534f; /* rojo */
+  color: white;
+}
+
+#confirm-no {
+  background-color: #ccc;
+  color: #333;
+}
+
+.hidden {
+  display: none;
+}
+

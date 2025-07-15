@@ -36,10 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(result.error || 'Error al guardar');
             }
 
-            alert(result.message || "¡Cambios guardados!");
-            const redirectUrl = `/api/persons/ver_personas/member?status=${currentStatus}`;
-            console.log("Redirigiendo a:", redirectUrl);
-            window.location.href = redirectUrl;
+            showMessage("Socio actualizado exitosamente: ", true);
+
+            // Wait 3 seconds before redirecting:
+            setTimeout(() => {
+                const redirectUrl = `/api/persons/ver_personas/member?status=${currentStatus}`;
+                console.log("Redirigiendo a:", redirectUrl);
+                window.location.href = redirectUrl;
+            }, 3000);
+
             
         } catch (error) {
             console.error("Error:", error);
