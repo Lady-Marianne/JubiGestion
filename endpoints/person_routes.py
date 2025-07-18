@@ -32,7 +32,7 @@ def get_all_persons(kind):
         if not model_class:
             return jsonify({"error": f"Tipo de persona desconocido: {kind}"}), 400
         
-        # Obtain status by query param (?status=ACTIVO), default = ACTIVO
+        # Obtain status by query param (?status=ACTIVO), default = ACTIVO.
         status_str = request.args.get("status", "ACTIVO").upper()
 
         try:

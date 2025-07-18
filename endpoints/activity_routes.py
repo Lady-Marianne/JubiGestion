@@ -2,6 +2,7 @@
 
 from flask import render_template, Blueprint, request, jsonify
 from models.activity import Activity
+from models.enums import ActivityStatus
 from extensions import db
 from sqlalchemy.exc import IntegrityError
 from utils.date_utils import parse_dates
@@ -18,12 +19,14 @@ def show_activities():
 
 @activity_bp.route('/editar_actividad', methods=['PUT'])
 def edit_activity():
-    return render_template("activity_templates/edit_activity.html")
+    activity = Activity.query.get_or_404(activity_id)
+    return render_template("activity_templates/edit_activity.html", activity=activity.to_dict())
 
 @activity_bp.route('/new', methods=['POST'])
 def create_activity():
     try:
         data = request.get_json()
+        print("JSON recibido:", data)
         if not data:
             return jsonify({"error": "No se recibieron datos"}), 400
 
@@ -59,9 +62,23 @@ def create_activity():
 @activity_bp.route('/all', methods=['GET'])
 def get_all_activities():
     try:
+        # Obtain status by query param (?status=ACTIVO), default = ACTIVO.
+        status_str = request.args.get("status", "ACTIVO").upper()
+
+        try:
+            status_enum = ActivityStatus[status_str]
+        except KeyError:
+            return jsonify({"error": f"Estado inválido: {status_str}"}), 400
+
         activities = Activity.query.order_by(Activity.name.asc()).all()
-        activities_data = jsonify([a.to_dict() for a in activities])
-        return activities_data, 200
+
+        activities = model_class.query \
+            .filter_by(status=status_enum) \
+            .order_by(model_class.name.asc()) \
+            .all
+        
+        return jsonify([a.to_dict() for a in activities])
+    
     except Exception as e:
         print("ERROR AL TRAER ACTIVIDADES:", e)
         return jsonify({"error": str(e)}), 500

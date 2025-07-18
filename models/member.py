@@ -13,11 +13,6 @@ class Member(BasePerson):
 
     activity_enrollments = db.relationship("ActivityEnrollment", back_populates="member", cascade="all, delete-orphan")
     
-    """
-    def __repr__(self):
-        return f"<Member {self.first_names} {self.last_name} ({self.status})>"
-    """
-    
     def __repr__(self):
         return f"<Member {self.id} - {self.dni}>"
 

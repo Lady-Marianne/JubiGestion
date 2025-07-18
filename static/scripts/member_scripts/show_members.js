@@ -88,7 +88,6 @@ document.addEventListener("click", async function (event) {
     const personId = button.dataset.id;
     const kind = button.dataset.kind;
 
-   // if (!confirm("¿Estás segura/o de que querés eliminar este socio?")) return;
     showConfirmation("¿Estás segura/o de que querés eliminar este socio?", async () => {
     // Proceed with deletion:
     try {
