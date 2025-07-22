@@ -12,11 +12,6 @@ class ActivityStatus(BaseEnum):
     SUSPENDIDO = "SUSPENDIDO"
     CANCELADO = "CANCELADO"
 
-class AppointmentStatus(BaseEnum):
-    PROGRAMADO = "PROGRAMADO"
-    COMPLETADO = "COMPLETADO"
-    CANCELED = "CANCELADO"
-
 class Gender(BaseEnum):
     M = "M"
     F = "F"
@@ -37,4 +32,3 @@ class Profession(BaseEnum):
 class PaymentStatus(BaseEnum):
     PENDIENTE = "PENDIENTE"
     PAGADO = "PAGADO"
-    CANCELADO = "CANCELADO"

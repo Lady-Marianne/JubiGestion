@@ -1,3 +1,6 @@
+// static/scripts/delete_person.js
+// This script handles the deletion of a person when the delete button is clicked.
+
 document.addEventListener('click', async (event) => {
     if (event.target.classList.contains('delete-person-btn')) {
         event.preventDefault(); // Prevent default action if it's a link.

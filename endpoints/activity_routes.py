@@ -113,18 +113,18 @@ def update_activity(activity_id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
     
-@activity_bp.route('/delete/<int:activity_id>', methods=['PATCH'])
-def delete_activity(activity_id):
+@activity_bp.route('/cancel_activity/<int:activity_id>', methods=['PATCH'])
+def cancel_activity(activity_id):
     try:
         activity = Activity.query.get_or_404(activity_id)
 
         if activity.status == ActivityStatus.CANCELADO:
-            return jsonify({"message": "La actividad ya está cancelada."}), 200
+            return jsonify({"message": "La actividad/taller ya está cancelada."}), 200
 
         activity.status = ActivityStatus.CANCELADO
         db.session.commit()
-        return jsonify({"message": "Actividad cancelada correctamente."}), 200
+        return jsonify({"message": "Actividad/taller cancelado correctamente."}), 200
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": f"Error al cancelar actividad: {str(e)}"}), 500
+        return jsonify({"error": f"Error al cancelar actividad/taller: {str(e)}"}), 500
