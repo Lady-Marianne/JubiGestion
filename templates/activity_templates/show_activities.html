@@ -1,10 +1,15 @@
+<!-- templates/activity_templates/show_activities.html 
+    Esta es la que está incompleta y debemos mejorar siguiendo el modelo 
+    de templates/member_templates/show_members.html
+-->
+
 {% extends "layout.html" %}
 
 {% block title %}Actividades y talleres:{% endblock %}
 
 {% block content %}
-    <h1>Actividades y talleres:</h1>
-    <form method="GET" action="{{ url_for('activity.get_all_activities') }}">
+    <h1 id="activities-title">Actividades y talleres:</h1>
+    <div id="message-box" class=""></div>
         <table id="activitiesTable">
             <thead>
                 <tr>
@@ -14,7 +19,6 @@
                     <th>Fecha de inicio</th>
                     <th>Fecha de fin</th>
                     <th>Capacidad</th>
-                    <th>Estado</th>
                     <th>Acciones</th>
                </tr>
             </thead>
@@ -26,6 +30,8 @@
 
 {% endblock %}
 {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/utils/messages.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/utils/confirmation.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/activity_scripts/show_activities.js') }}"></script>
 {% endblock %}
 {% block styles %}

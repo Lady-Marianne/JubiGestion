@@ -17,12 +17,12 @@ def add_activity():
 def show_activities():
     return render_template("activity_templates/show_activities.html")
 
-@activity_bp.route('/editar_actividad', methods=['PUT'])
-def edit_activity():
+@activity_bp.route('/editar_actividad/<int:activity_id>', methods=['GET'])
+def edit_activity(activity_id):
     activity = Activity.query.get_or_404(activity_id)
     return render_template("activity_templates/edit_activity.html", activity=activity.to_dict())
 
-@activity_bp.route('/new', methods=['POST'])
+@activity_bp.route('/create', methods=['POST'])
 def create_activity():
     try:
         data = request.get_json()
@@ -72,18 +72,18 @@ def get_all_activities():
 
         activities = Activity.query.order_by(Activity.name.asc()).all()
 
-        activities = model_class.query \
+        activities = Activity.query \
             .filter_by(status=status_enum) \
-            .order_by(model_class.name.asc()) \
-            .all
-        
+            .order_by(Activity.name.asc()) \
+            .all()
+
         return jsonify([a.to_dict() for a in activities])
     
     except Exception as e:
         print("ERROR AL TRAER ACTIVIDADES:", e)
         return jsonify({"error": str(e)}), 500
-    
-@activity_bp.route('/<int:activity_id>', methods=['PUT'])
+
+@activity_bp.route('/update_activity/<int:activity_id>', methods=['POST', 'PUT'])
 def update_activity(activity_id):
     try:
         data = request.get_json()
@@ -112,3 +112,19 @@ def update_activity(activity_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
+    
+@activity_bp.route('/delete/<int:activity_id>', methods=['PATCH'])
+def delete_activity(activity_id):
+    try:
+        activity = Activity.query.get_or_404(activity_id)
+
+        if activity.status == ActivityStatus.CANCELADO:
+            return jsonify({"message": "La actividad ya está cancelada."}), 200
+
+        activity.status = ActivityStatus.CANCELADO
+        db.session.commit()
+        return jsonify({"message": "Actividad cancelada correctamente."}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error al cancelar actividad: {str(e)}"}), 500

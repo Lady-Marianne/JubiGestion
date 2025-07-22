@@ -1,4 +1,5 @@
 // static/scripts/member_scripts/show_members.js
+// This script works and is the model for other scripts that show other things.
 
 document.addEventListener("DOMContentLoaded", async function () {
     const membersTable = document.querySelector("#membersTable");
