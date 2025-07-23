@@ -25,6 +25,8 @@ from models.base_person import BasePerson
 from models.member import Member
 from models.payment import Payment
 from models.professional import Professional
+from models.professional_service import ProfessionalService
+from models.service import Service
 from models.teacher import Teacher
 
 

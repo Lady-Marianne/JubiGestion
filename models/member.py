@@ -11,11 +11,12 @@ class Member(BasePerson):
 
     _pami_number = db.Column("pami_number", db.String(14), nullable=True)
 
-    activity_enrollments = db.relationship("ActivityEnrollment", back_populates="member", cascade="all, delete-orphan")
+    activity_enrollments = db.relationship("ActivityEnrollment", 
+                                           back_populates="member",
+                                           cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<Member {self.id} - {self.dni}>"
-
     
     @property
     def pami_number(self):
