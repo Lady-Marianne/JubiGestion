@@ -18,16 +18,6 @@ class Gender(BaseEnum):
 
     def __str__(self):
         return "Masculino" if self == Gender.M else "Femenino"
-    
-class Profession(BaseEnum):
-    ABOGADO = "ABOGADO"
-    ENFERMERO = "ENFERMERO"
-    REFLEXÓLOGA = "REFLEXÓLOGA"
-    MÉDICO_DE_CABECERA = "MÉDICO DE CABECERA"
-    NUTRICIONISTA = "NUTRICIONISTA"
-    PSICÓLOGO = "PSICÓLOGO"
-    PSIQUIATRA = "PSIQUIATRA"
-    PODÓLOGO = "PODÓLOGO"
 
 class PaymentStatus(BaseEnum):
     PENDIENTE = "PENDIENTE"
