@@ -1,5 +1,5 @@
 // static/scripts/cancel_activity.js
-// This script handles the cancellation of an activity when the cancel button is clicked.
+// This script handles the cancellation of an activity or service when the cancel button is clicked.
 
 document.addEventListener('click', async (event) => {
     if (event.target.classList.contains('cancel-activity-btn')) {
