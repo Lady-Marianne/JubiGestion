@@ -50,14 +50,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <button class="edit-activity-btn" data-id="${activity.id}" title="Editar">
                         <i class="fas fa-pen"></i>
                     </button>
-                    <button class="delete-activity-btn" data-id="${activity.id}" title="Cancelar">
+                    <button class="cancel-activity-btn" data-id="${activity.id}" title="Cancelar">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>`;
             tbody.appendChild(row);
         });
 
-        // Edit buttons
+        // Edit buttons:
         document.querySelectorAll(".edit-activity-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -72,16 +72,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 
-// ✅ Delete handler con confirmación:
+// ✅ Cancel handler con confirmación:
 document.addEventListener("click", async function (event) {
-    const button = event.target.closest(".delete-activity-btn");
+    const button = event.target.closest(".cancel-activity-btn");
     if (!button) return;
 
     const activityId = button.dataset.id;
 
     showConfirmation("¿Estás segura/o de que querés cancelar esta actividad/taller?", async () => {
         try {
-            const response = await fetch(`/api/activities/delete/${activityId}`, {
+            const response = await fetch(`/api/activities/cancel_activity/${activityId}`, {
                 method: 'PATCH'
             });
 

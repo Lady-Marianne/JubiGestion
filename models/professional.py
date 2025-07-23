@@ -8,7 +8,7 @@ from models.enums import Profession
 class Professional(BasePerson):
     __tablename__ = 'professionals'
   
-    license_number = db.Column(db.String(20), unique=True, nullable=True)  # Professional license number.
+    license_number = db.Column(db.String(20), nullable=True)  # Professional license number.
     profession = db.Column(db.Enum((Profession)), nullable=False)
     schedule = db.Column(db.String(100), nullable=True)  # Schedule in a string format (e.g., "Mon-Fri 9am-5pm").
 
