@@ -9,6 +9,10 @@ from utils.date_utils import parse_dates
 
 activity_bp = Blueprint('activity', __name__)
 
+@activity_bp.route('/activities_index')
+def activity_dashboard():
+    return render_template('activity_templates/activities.html')
+
 @activity_bp.route("/nueva_actividad", methods=["GET", "POST"])
 def add_activity():
     return render_template("activity_templates/add_activity.html")

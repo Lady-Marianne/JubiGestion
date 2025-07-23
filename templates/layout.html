@@ -22,14 +22,8 @@
             <h1>MENÚ</h1>
             <nav>
                 <a href="{{ url_for('index') }}">Inicio</a>
-                <a href="{{ url_for('member.add_member') }}">Agregar nuevo socio</a>
-                <a href="{{ url_for('person.show_persons', kind='member') }}?status=ACTIVO">Ver socios activos</a>
-                <a href="{{ url_for('person.show_persons', kind='member') }}?status=SUSPENDIDO">Ver socios suspendidos</a>
-                <a href="{{ url_for('person.show_persons', kind='member') }}?status=ELIMINADO">Ver socios eliminados</a>
-                <a href="{{ url_for('activity.add_activity') }}">Agregar nueva actividad o taller</a>
-                <a href="{{ url_for('activity.show_activities') }}?status=ACTIVO">Ver actividades y talleres activos</a>
-                <a href="{{ url_for('activity.show_activities') }}?status=SUSPENDIDO">Ver actividades y talleres suspendidos</a>
-                <a href="{{ url_for('activity.show_activities') }}?status=CANCELADO">Ver actividades y talleres cancelados</a>
+                <a href="{{ url_for('member.member_dashboard') }}">Gestión de socios</a>
+                <a href="{{ url_for('activity.activity_dashboard') }}">Gestión de actividades y talleres</a>
             </nav>
         </aside>
 

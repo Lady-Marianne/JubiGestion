@@ -1,0 +1,27 @@
+<!-- templates/member_templates/members.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}Socios{% endblock %}
+
+{% block content %}
+<h2>Gestión de Socios</h2>
+
+<div class="dashboard">
+    <a class="dashboard-btn" href="{{ url_for('member.add_member') }}">
+        <i class="fas fa-user-plus"></i> Agregar nuevo socio
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('person.show_persons', kind='member') }}?status=ACTIVO">
+        <i class="fas fa-users"></i> Ver socios activos
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('person.show_persons', kind='member') }}?status=SUSPENDIDO">
+        <i class="fas fa-user-clock"></i> Ver socios suspendidos
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('person.show_persons', kind='member') }}?status=ELIMINADO">
+        <i class="fas fa-user-slash"></i> Ver socios eliminados
+    </a>
+</div>
+{% endblock %}

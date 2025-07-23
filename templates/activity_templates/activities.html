@@ -1,0 +1,27 @@
+<!-- templates/activity_templates/activity_main.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}Actividades{% endblock %}
+
+{% block content %}
+<h2>Gestión de Actividades y Talleres</h2>
+
+<div class="dashboard">
+    <a class="dashboard-btn" href="{{ url_for('activity.add_activity') }}">
+        <i class="fas fa-plus-circle"></i> Agregar nueva actividad o taller
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('activity.show_activities') }}?status=ACTIVO">
+        <i class="fas fa-calendar-check"></i> Ver activos
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('activity.show_activities') }}?status=SUSPENDIDO">
+        <i class="fas fa-calendar-minus"></i> Ver suspendidos
+    </a>
+
+    <a class="dashboard-btn" href="{{ url_for('activity.show_activities') }}?status=CANCELADO">
+        <i class="fas fa-calendar-times"></i> Ver cancelados
+    </a>
+</div>
+{% endblock %}
