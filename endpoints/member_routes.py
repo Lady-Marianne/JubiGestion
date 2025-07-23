@@ -9,6 +9,10 @@ from sqlalchemy.exc import IntegrityError
 
 member_bp = Blueprint('member', __name__)
 
+@member_bp.route('/members_index')
+def member_dashboard():
+    return render_template('member_templates/members.html')
+
 @member_bp.route("/nuevo_socio", methods=["GET", "POST"])
 def add_member():
     return render_template("member_templates/add_member.html")

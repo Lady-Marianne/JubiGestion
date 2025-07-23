@@ -4,65 +4,69 @@
 // It listens for clicks on the edit button, fetches the activity data.
 
 document.addEventListener('DOMContentLoaded', () => {
-    const activityList = document.getElementById('activity-list');
+    const activityList = document.getElementById('edit-activity-form');
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentStatus = urlParams.get('status') || 'ACTIVO';
 
-    activityList.addEventListener('click', async (event) => {
-        if (event.target.classList.contains('edit-activity-btn')) {
-            const row = event.target.closest('tr');
-            const activityId = row.dataset.id;
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-            try {
-                const res = await fetch(`/api/activities/${activityId}`);
-                const activity = await res.json();
+        const activityId = form.dataset.activityId;
+        const formData = new FormData(form);
 
-                // Show an emergent form with the loaded data:
-                showEditForm(activity);
-            } catch (error) {
-                console.error("Error al obtener los datos de la actividad:", error);
+        // Show loader (optional):
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Guardando...';
+
+        try {
+            const response = await fetch(`/api/activities/update_activity/${activityId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+
+            // Verify if the response is JSON:
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text();
+                throw new Error(text || 'Response is not JSON');
             }
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Error al guardar');
+            }
+
+            showMessage("Actividad/Taller actualizado exitosamente: ", true);
+
+            // Wait 3 seconds before redirecting:
+            setTimeout(() => {
+                const redirectUrl = `/api/activities/ver_actividades/activity?status=${currentStatus}`;
+                console.log("Redirigiendo a:", redirectUrl);
+                window.location.href = redirectUrl;
+            }, 3000);
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error: " + (error.message || "Verify the console"));
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Guardar Cambios';
         }
+
     });
+});
 
-    function showEditForm(activity) {
-        const formHtml = `
-            <form id="edit-activity-form">
-                <input type="hidden" name="id" value="${activity.id}">
-                <label>Nombre: <input type="text" name="name" value="${activity.name}"></label><br>
-                <label>Descripción: <textarea name="description">${activity.description}</textarea></label><br>
-                <label>Horario: <input type="text" name="schedule" value="${activity.schedule}"></label><br>
-                <label>Inicio: <input type="date" name="start_date" value="${activity.start_date}"></label><br>
-                <label>Fin: <input type="date" name="end_date" value="${activity.end_date}"></label><br>
-                <label>Capacidad: <input type="number" name="capacity" value="${activity.capacity}"></label><br>
-                <button type="submit">Guardar cambios</button>
-            </form>
-        `;
-
-        const modal = document.createElement('div');
-        modal.innerHTML = formHtml;
-        document.body.appendChild(modal);
-
-        modal.querySelector('#edit-activity-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-
-            try {
-                const res = await fetch(`/api/activities/${data.id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (res.ok) {
-                    alert('Actividad actualizada');
-                    location.reload();
-                } else {
-                    const errorData = await res.json();
-                    alert('Error: ' + errorData.error);
-                }
-            } catch (error) {
-                console.error("Error al enviar PUT:", error);
-            }
+document.addEventListener("DOMContentLoaded", function () {
+    const cancelButton = document.getElementById("cancel-button");
+    if (cancelButton) {
+        const url = cancelButton.getAttribute("data-url");
+        cancelButton.addEventListener("click", function () {
+            window.location.href = url;
         });
     }
 });

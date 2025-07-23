@@ -1,11 +1,13 @@
-{% extends "layout.html" %}
+<!-- templates/activity_templates/edit_activity.html-->
+
+ {% extends "layout.html" %}
 
 {% block title %}Editar Actividad{% endblock %}
 
 {% block content %}
 <h2>Editar Actividad</h2>
-<form id="edit-activity-form" method="PUT" action="{{ url_for('activity.update_activity', activity_id=activity.id) }}">
-        
+<form id="edit-activity-form" data-activity-id="{{ activity.id }}">
+      
     <label for="name">Nombre:</label>
     <input type="text" name="name" value="{{ activity.name }}" required><br>
 
@@ -31,12 +33,25 @@
         <option value="CANCELADO" {% if activity.status == 'CANCELADO' %}selected{% endif %}>Cancelado</option>
     </select><br>
 
-    <button type="submit">Guardar Cambios</button>
+    <div id="message-box"></div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn-save">Guardar</button>
+        <button id="cancel-button" type="button" class="btn-cancel"
+            data-url="{{ url_for('activity.show_activities', status=activity.status) }}">
+            Cancelar
+        </button>
+    </div>
+
 </form>
+
 {% endblock %}
+
 {% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/utils/messages.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/activity_scripts/edit_activity.js') }}"></script>
 {% endblock %}
+
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}

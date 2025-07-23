@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(Object.fromEntries(formData))
             });
 
-            // Verificar si la respuesta es JSON:
+            // Verify if the response is JSON:
             const contentType = response.headers.get('content-type');
             if (!contentType || !contentType.includes('application/json')) {
                 const text = await response.text();
-                throw new Error(text || 'Respuesta no JSON');
+                throw new Error(text || 'Response is not JSON');
             }
 
             const result = await response.json();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error("Error:", error);
-            alert("Error: " + (error.message || "Verifica la consola"));
+            alert("Error: " + (error.message || "Verify the console"));
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Guardar Cambios';
