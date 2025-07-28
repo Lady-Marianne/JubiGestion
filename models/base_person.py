@@ -20,6 +20,8 @@ class BasePerson(BaseModel):
     phone = db.Column(db.String(20), nullable=True)
     _email = db.Column("email", db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=True)
+    city = db.Column(db.String(100), nullable=True)
+    nationality = db.Column(db.String(50), nullable=True)
     status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 

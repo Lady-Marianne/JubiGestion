@@ -8,8 +8,11 @@ from utils.validators import is_valid_pami_number
 class Member(BasePerson):
     
     __tablename__ = 'members'
-
-    _pami_number = db.Column("pami_number", db.String(14), nullable=True)
+    health_insurance = db.Column(db.String(100), nullable=True)  # e.g., "PAMI", "IAPOS", "OSDE", etc.
+    health_insurance_number = db.Column(db.String(20), nullable=False)  # e.g., "1234567890".
+    # _pami_number = db.Column("pami_number", db.String(14), nullable=True)
+    age = db.Column(db.Integer, nullable=False)  # Age in years.
+    marital_status = db.Column(db.String(20), nullable=False)  # e.g., "Soltero", "Casado", etc.
 
     activity_enrollments = db.relationship("ActivityEnrollment", 
                                            back_populates="member",
