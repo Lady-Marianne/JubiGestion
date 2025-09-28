@@ -1,8 +1,8 @@
-"""Initial migration.
+"""Initial migration after refactoring Member model.
 
-Revision ID: f88150a57560
+Revision ID: c394b8672d94
 Revises: 
-Create Date: 2025-06-17 14:40:03.907214
+Create Date: 2025-09-28 16:34:33.185220
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f88150a57560'
+revision = 'c394b8672d94'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,10 @@ def upgrade():
     sa.UniqueConstraint('id')
     )
     op.create_table('members',
-    sa.Column('pami_number', sa.String(length=14), nullable=True),
+    sa.Column('member_type', sa.Enum('JUBILADO', 'PENSIONADO', 'ADHERENTE', name='membertype'), nullable=False),
+    sa.Column('health_plan', sa.String(length=50), nullable=True),
+    sa.Column('affiliate_number', sa.String(length=20), nullable=True),
+    sa.Column('notes', sa.Text(), nullable=True),
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dni', sa.String(length=8), nullable=False),
     sa.Column('gender', sa.Enum('M', 'F', name='gender'), nullable=False),
@@ -41,6 +44,8 @@ def upgrade():
     sa.Column('phone', sa.String(length=20), nullable=True),
     sa.Column('email', sa.String(length=100), nullable=True),
     sa.Column('address', sa.String(length=200), nullable=True),
+    sa.Column('marital_status', sa.Enum('SOLTERO', 'CASADO', 'DIVORCIADO', 'VIUDO', name='maritalstatus'), nullable=True),
+    sa.Column('nationality', sa.String(length=100), nullable=True),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
@@ -48,7 +53,6 @@ def upgrade():
     )
     op.create_table('professionals',
     sa.Column('license_number', sa.String(length=20), nullable=True),
-    sa.Column('profession', sa.Enum('ABOGADO', 'ENFERMERO', 'REFLEXÓLOGA', 'MÉDICO_DE_CABECERA', 'NUTRICIONISTA', 'PSICÓLOGO', 'PSIQUIATRA', 'PODÓLOGO', name='profession'), nullable=False),
     sa.Column('schedule', sa.String(length=100), nullable=True),
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('dni', sa.String(length=8), nullable=False),
@@ -59,21 +63,30 @@ def upgrade():
     sa.Column('phone', sa.String(length=20), nullable=True),
     sa.Column('email', sa.String(length=100), nullable=True),
     sa.Column('address', sa.String(length=200), nullable=True),
+    sa.Column('marital_status', sa.Enum('SOLTERO', 'CASADO', 'DIVORCIADO', 'VIUDO', name='maritalstatus'), nullable=True),
+    sa.Column('nationality', sa.String(length=100), nullable=True),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('dni'),
-    sa.UniqueConstraint('license_number')
+    sa.UniqueConstraint('dni')
+    )
+    op.create_table('services',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('is_pami_covered', sa.Boolean(), nullable=True),
+    sa.Column('default_fee', sa.Numeric(precision=10, scale=2), nullable=True),
+    sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'CANCELADO', name='activitystatus'), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('activity_enrollments',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('member_id', sa.Integer(), nullable=False),
     sa.Column('activity_id', sa.Integer(), nullable=False),
     sa.Column('enrollment_date', sa.Date(), nullable=False),
-    sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'CANCELADO', name='activitystatus'), nullable=False),
     sa.ForeignKeyConstraint(['activity_id'], ['activities.id'], ),
     sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('member_id', 'activity_id')
     )
     op.create_table('payments',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -84,6 +97,15 @@ def upgrade():
     sa.Column('status', sa.String(length=20), nullable=False),
     sa.ForeignKeyConstraint(['member_id'], ['members.id'], ),
     sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('professional_services',
+    sa.Column('professional_id', sa.Integer(), nullable=False),
+    sa.Column('service_id', sa.Integer(), nullable=False),
+    sa.Column('custom_fee', sa.Numeric(precision=10, scale=2), nullable=True),
+    sa.Column('notes', sa.String(length=200), nullable=True),
+    sa.ForeignKeyConstraint(['professional_id'], ['professionals.id'], ),
+    sa.ForeignKeyConstraint(['service_id'], ['services.id'], ),
+    sa.PrimaryKeyConstraint('professional_id', 'service_id')
     )
     op.create_table('teachers',
     sa.Column('activity_id', sa.Integer(), nullable=False),
@@ -96,6 +118,8 @@ def upgrade():
     sa.Column('phone', sa.String(length=20), nullable=True),
     sa.Column('email', sa.String(length=100), nullable=True),
     sa.Column('address', sa.String(length=200), nullable=True),
+    sa.Column('marital_status', sa.Enum('SOLTERO', 'CASADO', 'DIVORCIADO', 'VIUDO', name='maritalstatus'), nullable=True),
+    sa.Column('nationality', sa.String(length=100), nullable=True),
     sa.Column('status', sa.Enum('ACTIVO', 'SUSPENDIDO', 'ELIMINADO', name='personstatus'), nullable=False),
     sa.Column('join_date', sa.Date(), nullable=False),
     sa.ForeignKeyConstraint(['activity_id'], ['activities.id'], ),
@@ -108,8 +132,10 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('teachers')
+    op.drop_table('professional_services')
     op.drop_table('payments')
     op.drop_table('activity_enrollments')
+    op.drop_table('services')
     op.drop_table('professionals')
     op.drop_table('members')
     op.drop_table('activities')

@@ -22,6 +22,7 @@ class Gender(BaseEnum):
 class MaritalStatus(BaseEnum):
     SOLTERO = "SOLTERO"
     CASADO = "CASADO"
+    CONVIVIENTE = "CONVIVIENTE"
     DIVORCIADO = "DIVORCIADO"
     VIUDO = "VIUDO"
 
@@ -29,6 +30,15 @@ class MemberType(BaseEnum):
     JUBILADO = "JUBILADO"      
     PENSIONADO = "PENSIONADO"   
     ADHERENTE = "ADHERENTE"
+
+class HealthPlan(BaseEnum):
+    PAMI = "PAMI"
+    IAPOS = "IAPOS"
+    OSECAC = "OSECAC"
+    OSDE = "OSDE"
+    GALENO = "GALENO"
+    NINGUNA = "NINGUNA"
+    OTRA = "OTRA"
 
 class PaymentStatus(BaseEnum):
     PENDIENTE = "PENDIENTE"

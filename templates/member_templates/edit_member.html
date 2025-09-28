@@ -24,8 +24,29 @@
     <label for="last_name">Apellidos:</label>
     <input type="text" name="last_name" value="{{ member.last_name }}" required><br>
 
-    <label for="pami_number">Nro. de Afiliado de PAMI:</label>
-    <input type="text" name="pami_number" value="{{ member.pami_number }}"><br>
+    <label for="member_type">Tipo de Socio:</label>
+    <select name="member_type" required>
+        <option value="JUBILADO" {% if member.member_type == 'JUBILADO' %}selected{% endif %}>Jubilado</option>
+        <option value="PENSIONADO" {% if member.member_type == 'PENSIONADO' %}selected{% endif %}>Pensionado</option>
+        <option value="ADHERENTE" {% if member.member_type == 'ADHERENTE' %}selected{% endif %}>Adherente</option>
+    </select><br>
+
+    <label for="health_plan">Obra Social:</label>
+    <select name="health_plan" id="health_plan" required>
+        {% for plan in ['PAMI', 'IAPOS', 'OSECAC', 'OSDE', 'GALENO', 'NINGUNA', 'OTRA'] %}
+            <option value="{{ plan }}" {% if member.health_plan.value == plan %}selected{% endif %}>
+                {{ plan }}
+            </option>
+        {% endfor %}
+    </select><br>
+    <!-- Field for "OTRA" that appears only if "OTRA" is selected -->
+    <div id="other_health_plan_field" style="display: {% if member.health_plan.value != 'OTRA' %}none{% endif %};">        
+        <label for="other_health_plan">Especifique otra obra social:</label>
+        <input type="text" name="other_health_plan" id="other_health_plan" value="{{ member.other_health_plan or '' }}">
+    </div> 
+
+    <label for="affiliate_number">Nro. de Afiliado:</label>
+    <input type="text" name="affiliate_number" value="{{ member.affiliate_number }}"><br>
 
     <label for="birth_date">Fecha de Nacimiento:</label>
     <input type="date" name="birth_date" value="{{ member.birth_date }}" required><br>
@@ -38,6 +59,18 @@
 
     <label for="address">Dirección:</label>
     <input type="text" name="address" value="{{ member.address }}" required><br>
+
+    <label for="marital_status">Estado Civil:</label>
+    <select name="marital_status" required>
+        <option value="SOLTERO" {% if member.marital_status == 'SOLTERO' %}selected{% endif %}>Soltero/a</option>
+        <option value="CASADO" {% if member.marital_status == 'CASADO' %}selected{% endif %}>Casado/a</option>
+        <option value="CONVIVIENTE" {% if member.marital_status == 'CONVIVIENTE' %}selected{% endif %}>Conviviente</option>
+        <option value="VIUDO" {% if member.marital_status == 'VIUDO' %}selected{% endif %}>Viudo/a</option>
+        <option value="DIVORCIADO" {% if member.marital_status == 'DIVORCIADO' %}selected{% endif %}>Divorciado/a</option>
+    </select><br>
+
+    <label for="nationality">Nacionalidad:</label>
+    <input type="text" name="nationality" value="{{ member.nationality }}" required><br>    
 
     <label for="status">Estado:</label>
     <select name="status">
@@ -60,6 +93,13 @@
         </button>
     </div>
 </form>
+
+<script>
+    document.getElementById('health_plan').addEventListener('change', function() {
+        const otherField = document.getElementById('other_health_plan_field');
+        otherField.style.display = this.value === 'OTRA' ? 'block' : 'none';
+    });
+</script>
 
 {% endblock %}
 

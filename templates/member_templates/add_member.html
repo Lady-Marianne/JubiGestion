@@ -25,8 +25,28 @@
     <label for="last_name">Apellido:</label>
     <input type="text" name="last_name" id="last_name" required><br>
 
-    <label for="pami_number">Nro. de afiliado de PAMI (si corresponde):</label>
-    <input type="text" name="pami_number" id="pami_number" maxlength="14"><br>
+    <label for="member_type">Tipo de socio:</label>
+    <select name="member_type" id="member_type" required>
+        <option value="JUBILADO" selected>Jubilado</option>
+        <option value="PENSIONADO">Pensionado</option>
+        <option value="ADHERENTE">Adherente</option>
+    </select>
+    <br>
+
+    <label for="health_plan">Obra social:</label>
+    <select name="health_plan" id="health_plan">
+        <option value="PAMI" selected>PAMI</option>
+        <option value="IAPOS">IAPOS</option>
+        <option value="OSECAC">OSECAC</option>
+        <option value="OSDE">OSDE</option>
+        <option value="GALENO">GALENO</option>
+        <option value="NINGUNA">NINGUNA</option>
+        <option value="OTRA">Otra</option>
+    </select>
+    <br>
+
+    <label for="affiliate_number">Nro. de afiliado de la obra social (si tiene):</label>
+    <input type="text" name="affiliate_number" id="affiliate_number"><br>
 
     <label for="birth_date">Fecha de nacimiento:</label>
     <input type="date" name="birth_date" id="birth_date" required><br>
@@ -39,6 +59,12 @@
 
     <label for="address">Dirección:</label>
     <input type="text" name="address" id="address" required><br>
+
+    <label for="marital_status">Estado civil:</label>
+    <input type="text" name="marital_status" id="marital_status" required><br>
+
+    <label for="nationality">Nacionalidad:</label>
+    <input type="text" name="nationality" id="nationality" value="Argentina" required><br>
 
     <label for="join_date">Fecha de ingreso:</label>
     <input type="date" name="join_date" id="join_date" required><br>

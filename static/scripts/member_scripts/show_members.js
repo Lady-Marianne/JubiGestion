@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         members.forEach(member => {
-            const pamiDisplay = member.pami_number || "NO AFILIADO";
+            const affiliateDisplay = member.affiliate_number || "NO TIENE OBRA SOCIAL";
             const birthDate = member.birth_date?.split('T')[0] || "";
             const joinDate = member.join_date?.split('T')[0] || "";
 
@@ -45,11 +45,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${member.dni}</td>
                 <td>${member.last_name}</td>
                 <td>${member.first_names}</td>
-                <td>${pamiDisplay}</td>
+                <td>${member.health_plan}</td>
+                <td>${affiliateDisplay}</td>
                 <!-- <td>${birthDate}</td> -->
                 <td>${member.phone}</td>
                 <td>${member.email}</td>
                 <td>${member.address}</td>
+                <td>${member.marital_status}</td>
+                <td>${member.nationality}</td>
+                <td>${member.member_type}</td>
                 <!-- <td>${joinDate}</td> -->
                 <td>
                     <button class="edit-member-btn" data-id="${member.id}" title="Editar">

@@ -25,6 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!data.phone || data.phone.trim() === "") errors.push("El teléfono es obligatorio.");
         if (!data.email || data.email.trim() === "") errors.push("El correo electrónico es obligatorio.");
         if (!data.address || data.address.trim() === "") errors.push("La dirección es obligatoria.");
+        if (!data.marital_status || data.marital_status.trim() === "") errors.push("El estado civil es obligatorio.");
+        if (!data.nationality || data.nationality.trim() === "") errors.push("La nacionalidad es obligatoria.");    
+        if (!data.member_type || data.member_type.trim() === "") errors.push("El tipo de socio es obligatorio.");
+        if (!data.health_plan || data.health_plan.trim() === "") errors.push("La obra social es obligatoria.");
+        if (data.health_plan !== "NINGUNA" && (!data.affiliate_number || data.affiliate_number.trim() === "")) {
+            errors.push("El número de afiliado es obligatorio si tiene obra social.");
+        }
         if (!data.join_date) errors.push("La fecha de ingreso es obligatoria.");
 
         if (errors.length > 0) {

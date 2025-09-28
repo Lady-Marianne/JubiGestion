@@ -2,9 +2,10 @@
 
 from extensions import db
 from models.base_person import BasePerson
-from utils.validators import is_valid_pami_number
+from utils.validators import is_valid_affiliate_number
 from sqlalchemy import Enum as SQLAlchemyEnum
-from models.enums import MemberType
+from models.enums import MemberType, HealthPlan
+
 
 # Member (Center affiliate):
 class Member(BasePerson):
@@ -12,7 +13,9 @@ class Member(BasePerson):
     __tablename__ = 'members'
 
     member_type = db.Column(SQLAlchemyEnum(MemberType), nullable=False, default=MemberType.JUBILADO)  # e.g., 'JUBILADO', 'PENSIONADO', 'ADHERENTE'.
-    health_plan = db.Column(db.String(50), nullable=True, default='PAMI')  # e.g., 'PAMI', 'IAPOS', etc.
+    health_plan = db.Column(SQLAlchemyEnum(HealthPlan), default=HealthPlan.PAMI)  # e.g., 'PAMI', 'IAPOS', etc.
+    other_health_plan = db.Column(db.String(100), nullable=True)  # If health_plan is 'OTRA', specify here.
+    
     _affiliate_number = db.Column("affiliate_number", db.String(20), nullable=True)
     notes = db.Column(db.Text, nullable=True)
 
@@ -29,4 +32,8 @@ class Member(BasePerson):
     
     @affiliate_number.setter
     def affiliate_number(self, value):
+        if value is not None:
+            valid, error = is_valid_affiliate_number(value)
+            if not valid:
+                raise ValueError(f"Número de afiliado inválido: {error}")
         self._affiliate_number = value

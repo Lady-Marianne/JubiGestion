@@ -6,6 +6,7 @@ from extensions import db
 from utils.dni_utils import generate_full_dni
 from utils.date_utils import parse_dates
 from sqlalchemy.exc import IntegrityError
+from models.enums import HealthPlan
 
 member_bp = Blueprint('member', __name__)
 
@@ -34,6 +35,10 @@ def create_member():
         # Parse birth_date y join_date:
         parsed_dates = parse_dates(data, ['birth_date', 'join_date'])
 
+        # Convert health_plan to enum:
+        health_plan_value = data.get('health_plan', 'PAMI').upper().replace(' ', '_')
+        health_plan = HealthPlan[health_plan_value] if health_plan_value in [e.name for e in HealthPlan] else HealthPlan.PAMI
+
         new_member = Member(
             dni=generate_full_dni(data.get('gender'), data.get('dni')),
             gender=data.get('gender'),
@@ -43,12 +48,20 @@ def create_member():
             phone=data.get('phone'),
             email=data.get('email'),
             address=data.get('address'),
+            marital_status=data.get('marital_status'),
+            nationality=data.get('nationality', 'Argentina'),
             status=data.get('status', 'ACTIVO'),
-            join_date=parsed_dates.get('join_date')
+            join_date=parsed_dates.get('join_date'),
+            member_type=data.get('member_type', 'JUBILADO'),
+            health_plan=health_plan
         )
 
+        # Assign other_health_plan if health_plan is OTRA:
+        if health_plan == HealthPlan.OTHER and data.get('other_health_plan'):
+            new_member.other_health_plan = data.get('other_health_plan')
+
         # Setter with validation:
-        new_member.pami_number = data.get('pami_number')
+        new_member.affiliate_number = data.get('affiliate_number')
 
         db.session.add(new_member)
         db.session.commit()
@@ -93,10 +106,23 @@ def update_member(member_id):
         member.phone = data.get('phone', member.phone)
         member.email = data.get('email', member.email)
         member.address = data.get('address', member.address)
+        member.marital_status = data.get('marital_status', member.marital_status)
+        member.nationality = data.get('nationality', member.nationality)
         member.status = data.get('status', member.status)
         member.join_date = parsed_dates.get('join_date', member.join_date)
-        member.pami_number = data.get('pami_number', member.pami_number)
+        member.member_type = data.get('member_type', member.member_type)
+        
+        # Edit health_plan:
+        health_plan_value = data.get('health_plan', member.health_plan.name).upper().replace(' ', '_')
+        member.health_plan = HealthPlan[health_plan_value] if health_plan_value in [e.name for e in HealthPlan] else member.health_plan
 
+        # Edit other_health_plan if health_plan is OTRA:
+        if member.health_plan == HealthPlan.OTRA:
+            member.other_health_plan = data.get('other_health_plan', member.other_health_plan)
+        elif member.health_plan != HealthPlan.OTRA and member.other_health_plan:
+            member.other_health_plan = None  # Clear other_health_plan if not OTRA.
+
+        member.affiliate_number = data.get('affiliate_number', member.affiliate_number)
         db.session.commit()
 
         return jsonify({"message": "Socio actualizado exitosamente"}), 200         
