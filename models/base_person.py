@@ -3,7 +3,7 @@
 from extensions import db
 from sqlalchemy import func, Enum as SQLAlchemyEnum
 from utils.dni_utils import generate_full_dni
-from models.enums import PersonStatus, Gender
+from models.enums import PersonStatus, Gender, MaritalStatus
 from models.base_model import BaseModel
 from utils.validators import is_valid_email
 
@@ -20,6 +20,8 @@ class BasePerson(BaseModel):
     phone = db.Column(db.String(20), nullable=True)
     _email = db.Column("email", db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=True)
+    marital_status = db.Column(SQLAlchemyEnum(MaritalStatus), nullable=True)  # e.g., 'S' for Single, 'M' for Married, etc.
+    nationality = db.Column(db.String(100), nullable=True, default='Argentina')
     status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 

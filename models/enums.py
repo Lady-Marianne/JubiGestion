@@ -18,6 +18,17 @@ class Gender(BaseEnum):
 
     def __str__(self):
         return "Masculino" if self == Gender.M else "Femenino"
+    
+class MaritalStatus(BaseEnum):
+    SOLTERO = "SOLTERO"
+    CASADO = "CASADO"
+    DIVORCIADO = "DIVORCIADO"
+    VIUDO = "VIUDO"
+
+class MemberType(BaseEnum):
+    JUBILADO = "JUBILADO"      
+    PENSIONADO = "PENSIONADO"   
+    ADHERENTE = "ADHERENTE"
 
 class PaymentStatus(BaseEnum):
     PENDIENTE = "PENDIENTE"

@@ -3,13 +3,18 @@
 from extensions import db
 from models.base_person import BasePerson
 from utils.validators import is_valid_pami_number
+from sqlalchemy import Enum as SQLAlchemyEnum
+from models.enums import MemberType
 
 # Member (Center affiliate):
 class Member(BasePerson):
     
     __tablename__ = 'members'
 
-    _pami_number = db.Column("pami_number", db.String(14), nullable=True)
+    member_type = db.Column(SQLAlchemyEnum(MemberType), nullable=False, default=MemberType.JUBILADO)  # e.g., 'JUBILADO', 'PENSIONADO', 'ADHERENTE'.
+    health_plan = db.Column(db.String(50), nullable=True, default='PAMI')  # e.g., 'PAMI', 'IAPOS', etc.
+    _affiliate_number = db.Column("affiliate_number", db.String(20), nullable=True)
+    notes = db.Column(db.Text, nullable=True)
 
     activity_enrollments = db.relationship("ActivityEnrollment", 
                                            back_populates="member",
@@ -19,12 +24,9 @@ class Member(BasePerson):
         return f"<Member {self.id} - {self.dni}>"
     
     @property
-    def pami_number(self):
-        return self._pami_number
+    def affiliate_number(self):
+        return self._affiliate_number
     
-    @pami_number.setter
-    def pami_number(self, value):
-        is_valid, error = is_valid_pami_number(value)        
-        if not is_valid:
-            raise ValueError(error)
-        self._pami_number = value
+    @affiliate_number.setter
+    def affiliate_number(self, value):
+        self._affiliate_number = value
