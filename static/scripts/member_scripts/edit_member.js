@@ -65,3 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const healthPlan = document.getElementById('health_plan');
+        const otherField = document.getElementById('other_health_plan_field');
+        otherField.style.display = healthPlan.value === 'OTRA' ? 'block' : 'none';
+        healthPlan.addEventListener('change', function() {
+            otherField.style.display = this.value === 'OTRA' ? 'block' : 'none';
+        });
+    });

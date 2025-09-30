@@ -40,11 +40,12 @@
         {% endfor %}
     </select><br>
     <!-- Field for "OTRA" that appears only if "OTRA" is selected -->
-    <div id="other_health_plan_field" style="display: {% if member.health_plan.value != 'OTRA' %}none{% endif %};">        
+    <div id="other_health_plan_field">
         <label for="other_health_plan">Especifique otra obra social:</label>
         <input type="text" name="other_health_plan" id="other_health_plan" value="{{ member.other_health_plan or '' }}">
-    </div> 
-
+    </div>
+    <label for="health_plan_number">Nro. de Credencial de Obra Social:</label>
+    <input type="text" name="health_plan_number" id="health_plan_number" value="{{ member.health_plan_number or '' }}"><br>    
     <label for="affiliate_number">Nro. de Afiliado:</label>
     <input type="text" name="affiliate_number" value="{{ member.affiliate_number }}"><br>
 
@@ -93,13 +94,6 @@
         </button>
     </div>
 </form>
-
-<script>
-    document.getElementById('health_plan').addEventListener('change', function() {
-        const otherField = document.getElementById('other_health_plan_field');
-        otherField.style.display = this.value === 'OTRA' ? 'block' : 'none';
-    });
-</script>
 
 {% endblock %}
 
