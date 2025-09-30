@@ -13,7 +13,7 @@ class Member(BasePerson):
     __tablename__ = 'members'
 
     member_type = db.Column(SQLAlchemyEnum(MemberType), nullable=False, default=MemberType.JUBILADO)  # e.g., 'JUBILADO', 'PENSIONADO', 'ADHERENTE'.
-    health_plan = db.Column(SQLAlchemyEnum(HealthPlan), default=HealthPlan.PAMI)  # e.g., 'PAMI', 'IAPOS', etc.
+    health_plan = db.Column(SQLAlchemyEnum(HealthPlan), nullable=False, default=HealthPlan.PAMI)  # e.g., 'PAMI', 'IAPOS', etc.
     other_health_plan = db.Column(db.String(100), nullable=True)  # If health_plan is 'OTRA', specify here.
     
     _affiliate_number = db.Column("affiliate_number", db.String(20), nullable=True)

@@ -10,18 +10,18 @@ from utils.validators import is_valid_email
 class BasePerson(BaseModel):
     __abstract__ = True  # SQLAlchemy doesn`t convert it into a table.
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     dni = db.Column(db.String(8), unique=True, nullable=False)
     gender = db.Column(SQLAlchemyEnum(Gender), nullable=False)  # 'M' for Male, 'F' for Female.
     _dni_number = None  # Temporal, does not store in the DB, but is used to generate the complete DNI.
     first_names = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    birth_date = db.Column(db.Date, nullable=True)
+    birth_date = db.Column(db.Date, nullable=False)
     phone = db.Column(db.String(20), nullable=True)
     _email = db.Column("email", db.String(100), nullable=True)
-    address = db.Column(db.String(200), nullable=True)
-    marital_status = db.Column(SQLAlchemyEnum(MaritalStatus), nullable=True)  # e.g., 'S' for Single, 'M' for Married, etc.
-    nationality = db.Column(db.String(100), nullable=True, default='Argentina')
+    address = db.Column(db.String(200), nullable=False)
+    marital_status = db.Column(SQLAlchemyEnum(MaritalStatus), nullable=False)  # e.g., 'S' for Single, 'M' for Married, etc.
+    nationality = db.Column(db.String(100), nullable=False, default='Argentina')
     status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
 
