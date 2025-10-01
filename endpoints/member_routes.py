@@ -53,7 +53,8 @@ def create_member():
             status=data.get('status', 'ACTIVO'),
             join_date=parsed_dates.get('join_date'),
             member_type=data.get('member_type', 'JUBILADO'),
-            health_plan=health_plan
+            health_plan=health_plan,
+            notes=data.get('notes')
         )
 
         # Assign other_health_plan if health_plan is OTRA:

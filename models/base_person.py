@@ -20,10 +20,11 @@ class BasePerson(BaseModel):
     phone = db.Column(db.String(20), nullable=True)
     _email = db.Column("email", db.String(100), nullable=True)
     address = db.Column(db.String(200), nullable=False)
-    marital_status = db.Column(SQLAlchemyEnum(MaritalStatus), nullable=False)  # e.g., 'S' for Single, 'M' for Married, etc.
+    marital_status = db.Column(SQLAlchemyEnum(MaritalStatus), nullable=True)  # e.g., 'S' for Single, 'M' for Married, etc.
     nationality = db.Column(db.String(100), nullable=False, default='Argentina')
     status = db.Column(SQLAlchemyEnum(PersonStatus), nullable=False, default=PersonStatus.ACTIVO)
     join_date = db.Column(db.Date, nullable=False, default=func.current_date())
+    notes = db.Column(db.Text, nullable=True)
 
     def __repr__(self):
         return f"<{self.__class__.__name__} {self.first_names} {self.last_name}>"

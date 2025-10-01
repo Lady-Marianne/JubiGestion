@@ -15,9 +15,9 @@ class Member(BasePerson):
     member_type = db.Column(SQLAlchemyEnum(MemberType), nullable=False, default=MemberType.JUBILADO)  # e.g., 'JUBILADO', 'PENSIONADO', 'ADHERENTE'.
     health_plan = db.Column(SQLAlchemyEnum(HealthPlan), nullable=False, default=HealthPlan.PAMI)  # e.g., 'PAMI', 'IAPOS', etc.
     other_health_plan = db.Column(db.String(100), nullable=True)  # If health_plan is 'OTRA', specify here.
+    year = db.Column(db.Integer, nullable=True) # I don't know what this is for, keeping it nullable (Ask Ana).
     
     _affiliate_number = db.Column("affiliate_number", db.String(20), nullable=True)
-    notes = db.Column(db.Text, nullable=True)
 
     activity_enrollments = db.relationship("ActivityEnrollment", 
                                            back_populates="member",
